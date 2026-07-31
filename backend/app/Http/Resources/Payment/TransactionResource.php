@@ -22,6 +22,16 @@ class TransactionResource extends JsonResource
             'status' => $this->status,
             'gateway' => $this->whenLoaded('paymentGateway', fn () => $this->paymentGateway->driver),
             'meta' => $this->when((bool) $request->user()?->can('confirm', $this->resource), $this->meta),
+            'user' => $this->whenLoaded('user', fn () => [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+                'email' => $this->user->email,
+            ]),
+            'vendor' => $this->whenLoaded('vendor', fn () => [
+                'id' => $this->vendor->id,
+                'business_name' => $this->vendor->business_name,
+            ]),
+            'refunds' => RefundResource::collection($this->whenLoaded('refunds')),
             'refunded_amount' => $this->whenLoaded('refunds', fn () => $this->refunds->sum('amount')),
             'created_at' => $this->created_at,
         ];

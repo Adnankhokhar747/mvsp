@@ -13,7 +13,7 @@ class TransactionController extends Controller
     public function index(Request $request): AnonymousResourceCollection
     {
         $user = $request->user();
-        $query = Transaction::query()->with('paymentGateway');
+        $query = Transaction::query()->with(['paymentGateway', 'user', 'vendor']);
 
         if (! $user->hasAnyRole(['super-admin', 'finance-manager'])) {
             $ownerOrManagerVendorIds = $user->vendorMemberships()
@@ -25,6 +25,18 @@ class TransactionController extends Controller
             });
         }
 
+        if ($status = $request->input('filter.status')) {
+            $query->where('status', $status);
+        }
+
+        if ($type = $request->input('filter.type')) {
+            $query->where('type', $type);
+        }
+
+        if ($search = $request->input('filter.transaction_number')) {
+            $query->where('transaction_number', 'like', "%{$search}%");
+        }
+
         $transactions = $query->latest()->paginate($request->integer('per_page', 20));
 
         return TransactionResource::collection($transactions);
@@ -34,6 +46,6 @@ class TransactionController extends Controller
     {
         $this->authorize('view', $transaction);
 
-        return new TransactionResource($transaction->load(['paymentGateway', 'refunds']));
+        return new TransactionResource($transaction->load(['paymentGateway', 'refunds', 'user', 'vendor']));
     }
 }
