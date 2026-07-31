@@ -8,6 +8,7 @@ import { BookingDetailPage } from './features/bookings/pages/BookingDetailPage'
 import { ServicesListPage } from './features/services/pages/ServicesListPage'
 import { ServiceCreatePage } from './features/services/pages/ServiceCreatePage'
 import { ServiceDetailPage } from './features/services/pages/ServiceDetailPage'
+import { ProfilePage } from './features/vendor/pages/ProfilePage'
 
 function App() {
   return (
@@ -53,6 +54,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ServiceDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />

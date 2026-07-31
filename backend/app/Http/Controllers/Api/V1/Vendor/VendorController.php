@@ -4,16 +4,34 @@ namespace App\Http\Controllers\Api\V1\Vendor;
 
 use App\Domain\Vendor\Exceptions\VendorException;
 use App\Domain\Vendor\Models\Vendor;
+use App\Domain\Vendor\Models\VendorUser;
 use App\Domain\Vendor\Services\VendorService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Vendor\CreateVendorRequest;
 use App\Http\Requests\Vendor\UpdateVendorRequest;
 use App\Http\Resources\Vendor\VendorResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
     public function __construct(protected VendorService $vendors) {}
+
+    public function me(Request $request): JsonResponse
+    {
+        $vendorUser = VendorUser::with('vendor')->where('user_id', $request->user()->id)->first();
+
+        if (! $vendorUser) {
+            return response()->json(['message' => 'You are not a member of any vendor.'], 404);
+        }
+
+        return response()->json([
+            'data' => [
+                'vendor' => new VendorResource($vendorUser->vendor),
+                'role' => $vendorUser->role,
+            ],
+        ]);
+    }
 
     public function store(CreateVendorRequest $request): JsonResponse
     {

@@ -7,12 +7,20 @@ use App\Domain\Vendor\Models\Vendor;
 use App\Domain\Vendor\Services\VendorService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Vendor\UploadKycDocumentRequest;
+use App\Http\Resources\Vendor\KycDocumentTypeResource;
 use App\Http\Resources\Vendor\VendorKycDocumentResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class KycDocumentController extends Controller
 {
     public function __construct(protected VendorService $vendors) {}
+
+    public function types(): AnonymousResourceCollection
+    {
+        return KycDocumentTypeResource::collection(
+            KycDocumentType::where('is_active', true)->orderBy('name')->get()
+        );
+    }
 
     public function index(Vendor $vendor): AnonymousResourceCollection
     {

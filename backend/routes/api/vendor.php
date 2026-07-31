@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('vendors/{vendor:slug}', [VendorController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('vendor/me', [VendorController::class, 'me']);
     Route::post('vendors', [VendorController::class, 'store']);
     Route::patch('vendors/{vendor}', [VendorController::class, 'update']);
 
+    Route::get('vendor/kyc-document-types', [KycDocumentController::class, 'types']);
     Route::get('vendors/{vendor}/kyc-documents', [KycDocumentController::class, 'index']);
     Route::post('vendors/{vendor}/kyc-documents', [KycDocumentController::class, 'store']);
 
