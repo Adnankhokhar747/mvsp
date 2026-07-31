@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::post('vendors/{vendor}/suspend', [AdminVendorController::class, 'suspend']);
 
     Route::get('kyc-document-types', [KycDocumentTypeController::class, 'index']);
+    Route::get('vendors/{vendor}/kyc-documents', [VendorKycDocumentController::class, 'index']);
+    Route::get('vendors/{vendor}/kyc-documents/{document}/download', [VendorKycDocumentController::class, 'download']);
     Route::post('vendors/{vendor}/kyc-documents/{document}/review', [VendorKycDocumentController::class, 'review']);
 
     Route::get('categories', [AdminCategoryController::class, 'index']);

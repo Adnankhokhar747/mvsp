@@ -25,6 +25,7 @@ import Alert from '@mui/material/Alert'
 import { useApproveVendor, useRejectVendor, useSuspendVendor, useVendors } from '../hooks/useVendors'
 import { VendorStatusChip } from '../components/VendorStatusChip'
 import { RejectVendorDialog } from '../components/RejectVendorDialog'
+import { VendorKycDialog } from '../components/VendorKycDialog'
 import { EmptyState } from '../../../shared/components/EmptyState'
 import { ErrorState } from '../../../shared/components/ErrorState'
 import { extractErrorMessage } from '../../../shared/lib/api-client'
@@ -45,6 +46,7 @@ export function VendorsListPage() {
   const [menuVendor, setMenuVendor] = useState<Vendor | null>(null)
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null)
   const [rejectTarget, setRejectTarget] = useState<Vendor | null>(null)
+  const [kycTarget, setKycTarget] = useState<Vendor | null>(null)
   const [toast, setToast] = useState<{ message: string; severity: 'success' | 'error' } | null>(null)
 
   const { data, isLoading, isError, refetch } = useVendors({ page, status, search })
@@ -235,6 +237,14 @@ export function VendorsListPage() {
       </Paper>
 
       <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={closeMenu}>
+        <MenuItem
+          onClick={() => {
+            setKycTarget(menuVendor)
+            closeMenu()
+          }}
+        >
+          View KYC documents
+        </MenuItem>
         {menuVendor?.status === 'pending' && (
           <MenuItem
             onClick={() => {
@@ -255,6 +265,12 @@ export function VendorsListPage() {
         onClose={() => setRejectTarget(null)}
         onConfirm={handleRejectConfirm}
         isSubmitting={rejectMutation.isPending}
+      />
+
+      <VendorKycDialog
+        vendor={kycTarget}
+        onClose={() => setKycTarget(null)}
+        onNotify={(message, severity) => setToast({ message, severity })}
       />
 
       <Snackbar

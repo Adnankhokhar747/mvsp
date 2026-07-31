@@ -18,6 +18,19 @@ export interface Vendor {
   created_at: string
 }
 
+export type KycDocumentStatus = 'pending' | 'approved' | 'rejected'
+
+export interface VendorKycDocument {
+  id: number
+  kyc_document_type_id: number
+  document_type?: { id: number; name: string; slug: string }
+  file_path: string
+  status: KycDocumentStatus
+  rejected_reason: string | null
+  reviewed_at: string | null
+  created_at: string
+}
+
 export interface PaginatedResponse<T> {
   data: T[]
   meta: {
