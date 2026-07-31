@@ -33,6 +33,21 @@ class BookingResource extends JsonResource
                 'id' => $this->service->id,
                 'title' => $this->service->title,
             ]),
+            'customer' => $this->whenLoaded('customer', fn () => [
+                'id' => $this->customer->id,
+                'name' => $this->customer->name,
+                'email' => $this->customer->email,
+            ]),
+            'vendor' => $this->whenLoaded('vendor', fn () => [
+                'id' => $this->vendor->id,
+                'business_name' => $this->vendor->business_name,
+            ]),
+            'status_history' => $this->whenLoaded('statusHistory', fn () => $this->statusHistory->map(fn ($h) => [
+                'from_status' => $h->from_status,
+                'to_status' => $h->to_status,
+                'note' => $h->note,
+                'created_at' => $h->created_at,
+            ])),
             'created_at' => $this->created_at,
         ];
     }

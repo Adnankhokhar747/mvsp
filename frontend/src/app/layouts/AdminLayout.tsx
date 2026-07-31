@@ -33,7 +33,7 @@ const NAV_ITEMS = [
   { label: 'Overview', to: '/', icon: <DashboardOutlinedIcon />, enabled: true },
   { label: 'Vendors', to: '/vendors', icon: <StorefrontOutlinedIcon />, enabled: true },
   { label: 'Categories', to: '/categories', icon: <CategoryOutlinedIcon />, enabled: true },
-  { label: 'Bookings', to: '/bookings', icon: <EventNoteOutlinedIcon />, enabled: false },
+  { label: 'Bookings', to: '/bookings', icon: <EventNoteOutlinedIcon />, enabled: true },
   { label: 'Payments', to: '/payments', icon: <PaymentsOutlinedIcon />, enabled: false },
   { label: 'Settings', to: '/settings', icon: <SettingsOutlinedIcon />, enabled: false },
 ]

@@ -6,6 +6,7 @@ import { LoginPage } from './features/auth/pages/LoginPage'
 import { OverviewPage } from './features/overview/pages/OverviewPage'
 import { VendorsListPage } from './features/vendors/pages/VendorsListPage'
 import { CategoriesListPage } from './features/categories/pages/CategoriesListPage'
+import { BookingsListPage } from './features/bookings/pages/BookingsListPage'
 
 function App() {
   return (
@@ -41,6 +42,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <CategoriesListPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/bookings"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BookingsListPage />
               </AdminLayout>
             </ProtectedRoute>
           }

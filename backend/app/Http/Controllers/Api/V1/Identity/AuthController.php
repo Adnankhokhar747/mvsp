@@ -48,7 +48,9 @@ class AuthController extends Controller
             return response()->json(['message' => $e->getMessage()], 401);
         }
 
-        $request->session()->regenerate();
+        if ($request->hasSession()) {
+            $request->session()->regenerate();
+        }
 
         return (new UserResource($result['user']))
             ->additional(['message' => 'Login successful.', 'token' => $result['token']])

@@ -23,7 +23,7 @@ class BookingController extends Controller
     {
         $user = $request->user();
 
-        $query = Booking::query()->with(['service', 'quotes']);
+        $query = Booking::query()->with(['service', 'quotes', 'customer', 'vendor']);
 
         // A user's roles aren't mutually exclusive — the same account can be a
         // customer AND a vendor's staff member — so this is a union of every
@@ -40,7 +40,15 @@ class BookingController extends Controller
             });
         }
 
-        $bookings = $query->latest('scheduled_at')->paginate($request->integer('per_page', 20));
+        if ($status = $request->input('filter.status')) {
+            $query->where('status', $status);
+        }
+
+        if ($search = $request->input('filter.booking_number')) {
+            $query->where('booking_number', 'like', "%{$search}%");
+        }
+
+        $bookings = $query->latest('created_at')->paginate($request->integer('per_page', 20));
 
         return BookingResource::collection($bookings);
     }
@@ -62,7 +70,7 @@ class BookingController extends Controller
     {
         $this->authorize('view', $booking);
 
-        return new BookingResource($booking->load(['service', 'quotes', 'statusHistory']));
+        return new BookingResource($booking->load(['service', 'quotes', 'statusHistory', 'customer', 'vendor']));
     }
 
     public function reschedule(RescheduleBookingRequest $request, Booking $booking): JsonResponse
