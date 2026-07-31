@@ -8,6 +8,7 @@ import { VendorsListPage } from './features/vendors/pages/VendorsListPage'
 import { CategoriesListPage } from './features/categories/pages/CategoriesListPage'
 import { BookingsListPage } from './features/bookings/pages/BookingsListPage'
 import { PaymentsListPage } from './features/payments/pages/PaymentsListPage'
+import { SettingsPage } from './features/settings/pages/SettingsPage'
 
 function App() {
   return (
@@ -65,6 +66,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <PaymentsListPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <SettingsPage />
               </AdminLayout>
             </ProtectedRoute>
           }
