@@ -33,6 +33,7 @@ class ServiceResource extends JsonResource
                 'mime_type' => $media->mime_type,
             ]),
             'packages' => ServicePackageResource::collection($this->whenLoaded('packages')),
+            'availability' => ServiceAvailabilityResource::collection($this->whenLoaded('availability')),
             'vendor' => $this->whenLoaded('vendor', fn () => [
                 'id' => $this->vendor->id,
                 'business_name' => $this->vendor->business_name,

@@ -11,10 +11,40 @@ use App\Http\Requests\Catalog\StoreServiceRequest;
 use App\Http\Requests\Catalog\UpdateServiceRequest;
 use App\Http\Resources\Catalog\ServiceResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ServiceController extends Controller
 {
     public function __construct(protected ServiceService $services) {}
+
+    public function index(Request $request): JsonResponse|AnonymousResourceCollection
+    {
+        $vendorUser = VendorUser::where('user_id', $request->user()->id)
+            ->whereIn('role', ['owner', 'manager'])
+            ->first();
+
+        if (! $vendorUser) {
+            return response()->json(['message' => 'You must be a vendor owner or manager to view services.'], 403);
+        }
+
+        $query = Service::query()->with('category')->where('vendor_id', $vendorUser->vendor_id);
+
+        if ($status = $request->input('filter.status')) {
+            $query->where('status', $status);
+        }
+
+        $services = $query->latest('created_at')->paginate($request->integer('per_page', 20));
+
+        return ServiceResource::collection($services);
+    }
+
+    public function show(Service $service): ServiceResource
+    {
+        $this->authorize('view', $service);
+
+        return new ServiceResource($service->load(['category', 'packages', 'availability']));
+    }
 
     public function store(StoreServiceRequest $request): JsonResponse
     {

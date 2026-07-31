@@ -37,7 +37,21 @@ export function VendorLayout({ children }: { children: ReactNode }) {
               </Typography>
             </Link>
 
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+            <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
+              {user && (
+                <Link component={RouterLink} to="/bookings" underline="none" color="inherit">
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    Bookings
+                  </Typography>
+                </Link>
+              )}
+              {user && (
+                <Link component={RouterLink} to="/services" underline="none" color="inherit">
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    Services
+                  </Typography>
+                </Link>
+              )}
               {user && (
                 <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
                   {user.name}

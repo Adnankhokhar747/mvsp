@@ -5,6 +5,9 @@ import { ProtectedRoute } from './app/router/ProtectedRoute'
 import { LoginPage } from './features/auth/pages/LoginPage'
 import { BookingsListPage } from './features/bookings/pages/BookingsListPage'
 import { BookingDetailPage } from './features/bookings/pages/BookingDetailPage'
+import { ServicesListPage } from './features/services/pages/ServicesListPage'
+import { ServiceCreatePage } from './features/services/pages/ServiceCreatePage'
+import { ServiceDetailPage } from './features/services/pages/ServiceDetailPage'
 
 function App() {
   return (
@@ -26,6 +29,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <BookingDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/services"
+            element={
+              <ProtectedRoute>
+                <ServicesListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/services/new"
+            element={
+              <ProtectedRoute>
+                <ServiceCreatePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/services/:id"
+            element={
+              <ProtectedRoute>
+                <ServiceDetailPage />
               </ProtectedRoute>
             }
           />

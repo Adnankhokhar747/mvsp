@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('vendors/{vendor}/staff/invite', [StaffController::class, 'invite']);
     Route::delete('vendors/{vendor}/staff/{user}', [StaffController::class, 'destroy']);
 
+    Route::get('vendor/services', [ServiceController::class, 'index']);
+    Route::get('vendor/services/{service}', [ServiceController::class, 'show']);
     Route::post('vendor/services', [ServiceController::class, 'store']);
     Route::patch('vendor/services/{service}', [ServiceController::class, 'update']);
     Route::delete('vendor/services/{service}', [ServiceController::class, 'destroy']);
