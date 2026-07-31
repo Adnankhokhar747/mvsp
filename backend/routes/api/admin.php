@@ -1,0 +1,48 @@
+<?php
+
+use App\Http\Controllers\Api\V1\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Api\V1\Admin\KycDocumentTypeController;
+use App\Http\Controllers\Api\V1\Admin\PaymentGatewayController;
+use App\Http\Controllers\Api\V1\Admin\PayoutController as AdminPayoutController;
+use App\Http\Controllers\Api\V1\Admin\PlanFeatureController;
+use App\Http\Controllers\Api\V1\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Api\V1\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Api\V1\Admin\SubscriptionPlanController as AdminSubscriptionPlanController;
+use App\Http\Controllers\Api\V1\Admin\VendorController as AdminVendorController;
+use App\Http\Controllers\Api\V1\Admin\VendorKycDocumentController;
+use Illuminate\Support\Facades\Route;
+
+Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
+    Route::get('vendors', [AdminVendorController::class, 'index']);
+    Route::post('vendors/{vendor}/approve', [AdminVendorController::class, 'approve']);
+    Route::post('vendors/{vendor}/reject', [AdminVendorController::class, 'reject']);
+    Route::post('vendors/{vendor}/suspend', [AdminVendorController::class, 'suspend']);
+
+    Route::get('kyc-document-types', [KycDocumentTypeController::class, 'index']);
+    Route::post('vendors/{vendor}/kyc-documents/{document}/review', [VendorKycDocumentController::class, 'review']);
+
+    Route::get('categories', [AdminCategoryController::class, 'index']);
+    Route::post('categories', [AdminCategoryController::class, 'store']);
+    Route::patch('categories/{category}', [AdminCategoryController::class, 'update']);
+    Route::delete('categories/{category}', [AdminCategoryController::class, 'destroy']);
+
+    Route::post('services/{service}/moderate', [AdminServiceController::class, 'moderate']);
+
+    Route::get('payouts', [AdminPayoutController::class, 'index']);
+    Route::post('payouts/{payout}/approve', [AdminPayoutController::class, 'approve']);
+    Route::post('payouts/{payout}/reject', [AdminPayoutController::class, 'reject']);
+
+    Route::get('payment-gateways', [PaymentGatewayController::class, 'index']);
+    Route::patch('payment-gateways/{paymentGateway}', [PaymentGatewayController::class, 'update']);
+
+    Route::get('subscription-plans', [AdminSubscriptionPlanController::class, 'index']);
+    Route::post('subscription-plans', [AdminSubscriptionPlanController::class, 'store']);
+    Route::patch('subscription-plans/{subscriptionPlan}', [AdminSubscriptionPlanController::class, 'update']);
+    Route::delete('subscription-plans/{subscriptionPlan}', [AdminSubscriptionPlanController::class, 'destroy']);
+
+    Route::get('plan-features', [PlanFeatureController::class, 'index']);
+    Route::post('plan-features', [PlanFeatureController::class, 'store']);
+    Route::patch('plan-features/{planFeature}', [PlanFeatureController::class, 'update']);
+
+    Route::post('reviews/{review}/moderate', [AdminReviewController::class, 'moderate']);
+});

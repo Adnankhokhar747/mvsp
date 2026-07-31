@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Domain\Localization\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class TaxRule extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'country_code',
+        'rate_percentage',
+        'applies_to',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+}
