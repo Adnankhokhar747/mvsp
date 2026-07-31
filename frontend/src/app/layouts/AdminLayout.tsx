@@ -20,6 +20,7 @@ import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined'
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined'
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined'
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined'
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
@@ -35,6 +36,7 @@ const NAV_ITEMS = [
   { label: 'Categories', to: '/categories', icon: <CategoryOutlinedIcon />, enabled: true },
   { label: 'Bookings', to: '/bookings', icon: <EventNoteOutlinedIcon />, enabled: true },
   { label: 'Payments', to: '/payments', icon: <PaymentsOutlinedIcon />, enabled: true },
+  { label: 'Payouts', to: '/payouts', icon: <AccountBalanceWalletOutlinedIcon />, enabled: true },
   { label: 'Settings', to: '/settings', icon: <SettingsOutlinedIcon />, enabled: true },
 ]
 

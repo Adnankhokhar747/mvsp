@@ -18,7 +18,13 @@ class PayoutController extends Controller
     {
         $this->authorize('payouts.approve');
 
-        $payouts = PayoutRequest::query()->latest('requested_at')->paginate($request->integer('per_page', 20));
+        $query = PayoutRequest::query()->with(['vendor', 'bankAccount', 'wallet', 'processedBy']);
+
+        if ($status = $request->input('filter.status')) {
+            $query->where('status', $status);
+        }
+
+        $payouts = $query->latest('requested_at')->paginate($request->integer('per_page', 20));
 
         return PayoutRequestResource::collection($payouts);
     }
