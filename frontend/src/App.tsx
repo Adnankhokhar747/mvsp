@@ -12,6 +12,7 @@ import { SettingsPage } from './features/settings/pages/SettingsPage'
 import { PayoutsListPage } from './features/payouts/pages/PayoutsListPage'
 import { PlansPage } from './features/plans/pages/PlansPage'
 import { ReviewsListPage } from './features/reviews/pages/ReviewsListPage'
+import { ActivityLogPage } from './features/activity-logs/pages/ActivityLogPage'
 
 function App() {
   return (
@@ -113,6 +114,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <ReviewsListPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/activity-logs"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <ActivityLogPage />
               </AdminLayout>
             </ProtectedRoute>
           }

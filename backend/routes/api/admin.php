@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Admin\ActivityLogController;
 use App\Http\Controllers\Api\V1\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Api\V1\Admin\KycDocumentTypeController;
 use App\Http\Controllers\Api\V1\Admin\PaymentGatewayController;
@@ -48,4 +49,6 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
     Route::get('reviews', [AdminReviewController::class, 'index']);
     Route::post('reviews/{review}/moderate', [AdminReviewController::class, 'moderate']);
+
+    Route::get('activity-logs', [ActivityLogController::class, 'index']);
 });
