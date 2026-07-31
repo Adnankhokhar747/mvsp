@@ -14,6 +14,7 @@ import { PlansPage } from './features/plans/pages/PlansPage'
 import { ReviewsListPage } from './features/reviews/pages/ReviewsListPage'
 import { ActivityLogPage } from './features/activity-logs/pages/ActivityLogPage'
 import { StaffListPage } from './features/staff/pages/StaffListPage'
+import { ContentPage } from './features/content/pages/ContentPage'
 
 function App() {
   return (
@@ -137,6 +138,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <StaffListPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/content"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <ContentPage />
               </AdminLayout>
             </ProtectedRoute>
           }

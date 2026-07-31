@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\Api\V1\Admin\ActivityLogController;
 use App\Http\Controllers\Api\V1\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Api\V1\Admin\CmsPageController;
 use App\Http\Controllers\Api\V1\Admin\KycDocumentTypeController;
+use App\Http\Controllers\Api\V1\Admin\LegalDocumentController;
+use App\Http\Controllers\Api\V1\Admin\NotificationTemplateController;
 use App\Http\Controllers\Api\V1\Admin\PaymentGatewayController;
 use App\Http\Controllers\Api\V1\Admin\PayoutController as AdminPayoutController;
 use App\Http\Controllers\Api\V1\Admin\PlanFeatureController;
@@ -59,4 +62,19 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::patch('staff/{user}/role', [StaffController::class, 'updateRole']);
     Route::post('staff/{user}/suspend', [StaffController::class, 'suspend']);
     Route::post('staff/{user}/reactivate', [StaffController::class, 'reactivate']);
+
+    Route::get('cms-pages', [CmsPageController::class, 'index']);
+    Route::post('cms-pages', [CmsPageController::class, 'store']);
+    Route::patch('cms-pages/{cmsPage}', [CmsPageController::class, 'update']);
+    Route::delete('cms-pages/{cmsPage}', [CmsPageController::class, 'destroy']);
+
+    Route::get('legal-documents', [LegalDocumentController::class, 'index']);
+    Route::post('legal-documents', [LegalDocumentController::class, 'store']);
+    Route::patch('legal-documents/{legalDocument}', [LegalDocumentController::class, 'update']);
+    Route::post('legal-documents/{legalDocument}/publish', [LegalDocumentController::class, 'publish']);
+
+    Route::get('notification-templates', [NotificationTemplateController::class, 'index']);
+    Route::post('notification-templates', [NotificationTemplateController::class, 'store']);
+    Route::patch('notification-templates/{notificationTemplate}', [NotificationTemplateController::class, 'update']);
+    Route::delete('notification-templates/{notificationTemplate}', [NotificationTemplateController::class, 'destroy']);
 });
