@@ -60,6 +60,13 @@ export function VendorLayout({ children }: { children: ReactNode }) {
                 </Link>
               )}
               {user && (
+                <Link component={RouterLink} to="/wallet" underline="none" color="inherit">
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    Wallet
+                  </Typography>
+                </Link>
+              )}
+              {user && (
                 <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
                   {user.name}
                 </Typography>

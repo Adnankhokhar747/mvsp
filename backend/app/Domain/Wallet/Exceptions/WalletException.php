@@ -10,4 +10,9 @@ class WalletException extends Exception
     {
         return new self('The wallet does not have sufficient available balance for this operation.');
     }
+
+    public static function bankAccountNotOwned(): self
+    {
+        return new self('That bank account does not belong to this vendor.');
+    }
 }

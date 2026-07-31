@@ -23,6 +23,10 @@ class PayoutService
             throw WalletException::insufficientBalance();
         }
 
+        if ($bankAccountId !== null && ! $vendor->bankAccounts()->where('id', $bankAccountId)->exists()) {
+            throw WalletException::bankAccountNotOwned();
+        }
+
         return DB::transaction(function () use ($vendor, $wallet, $amount, $bankAccountId) {
             // Hold the funds immediately so a vendor can't request the same balance twice.
             $this->wallet->hold($vendor, $amount, null, 'Held pending payout request');

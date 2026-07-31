@@ -9,6 +9,7 @@ import { ServicesListPage } from './features/services/pages/ServicesListPage'
 import { ServiceCreatePage } from './features/services/pages/ServiceCreatePage'
 import { ServiceDetailPage } from './features/services/pages/ServiceDetailPage'
 import { ProfilePage } from './features/vendor/pages/ProfilePage'
+import { WalletPage } from './features/wallet/pages/WalletPage'
 
 function App() {
   return (
@@ -62,6 +63,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/wallet"
+            element={
+              <ProtectedRoute>
+                <WalletPage />
               </ProtectedRoute>
             }
           />
