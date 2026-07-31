@@ -46,5 +46,6 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::post('plan-features', [PlanFeatureController::class, 'store']);
     Route::patch('plan-features/{planFeature}', [PlanFeatureController::class, 'update']);
 
+    Route::get('reviews', [AdminReviewController::class, 'index']);
     Route::post('reviews/{review}/moderate', [AdminReviewController::class, 'moderate']);
 });

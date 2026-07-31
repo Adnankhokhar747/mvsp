@@ -21,6 +21,18 @@ class ReviewResource extends JsonResource
             'vendor_reply' => $this->vendor_reply,
             'vendor_replied_at' => $this->vendor_replied_at,
             'status' => $this->status,
+            'customer' => $this->whenLoaded('customer', fn () => [
+                'id' => $this->customer->id,
+                'name' => $this->customer->name,
+            ]),
+            'vendor' => $this->whenLoaded('vendor', fn () => [
+                'id' => $this->vendor->id,
+                'business_name' => $this->vendor->business_name,
+            ]),
+            'service' => $this->whenLoaded('service', fn () => [
+                'id' => $this->service->id,
+                'title' => $this->service->title,
+            ]),
             'created_at' => $this->created_at,
         ];
     }

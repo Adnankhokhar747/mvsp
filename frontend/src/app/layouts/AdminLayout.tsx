@@ -22,6 +22,7 @@ import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined'
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined'
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined'
 import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined'
+import ReviewsOutlinedIcon from '@mui/icons-material/ReviewsOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
@@ -39,6 +40,7 @@ const NAV_ITEMS = [
   { label: 'Payments', to: '/payments', icon: <PaymentsOutlinedIcon />, enabled: true },
   { label: 'Payouts', to: '/payouts', icon: <AccountBalanceWalletOutlinedIcon />, enabled: true },
   { label: 'Plans', to: '/plans', icon: <CardMembershipOutlinedIcon />, enabled: true },
+  { label: 'Reviews', to: '/reviews', icon: <ReviewsOutlinedIcon />, enabled: true },
   { label: 'Settings', to: '/settings', icon: <SettingsOutlinedIcon />, enabled: true },
 ]
 

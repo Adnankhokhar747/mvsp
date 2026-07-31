@@ -11,6 +11,7 @@ import { PaymentsListPage } from './features/payments/pages/PaymentsListPage'
 import { SettingsPage } from './features/settings/pages/SettingsPage'
 import { PayoutsListPage } from './features/payouts/pages/PayoutsListPage'
 import { PlansPage } from './features/plans/pages/PlansPage'
+import { ReviewsListPage } from './features/reviews/pages/ReviewsListPage'
 
 function App() {
   return (
@@ -101,6 +102,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <PlansPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/reviews"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <ReviewsListPage />
               </AdminLayout>
             </ProtectedRoute>
           }
