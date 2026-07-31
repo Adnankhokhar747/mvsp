@@ -10,6 +10,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthService
 {
@@ -95,10 +96,22 @@ class AuthService
 
     public function logout(User $user): void
     {
-        $user->currentAccessToken()?->delete();
+        // A cookie/session-authenticated request resolves currentAccessToken()
+        // to a Sanctum TransientToken stand-in (never null, but not a real
+        // persisted token), which has no delete() method - only a genuine
+        // bearer-token request has a PersonalAccessToken row to revoke.
+        $token = $user->currentAccessToken();
+        if ($token instanceof PersonalAccessToken) {
+            $token->delete();
+        }
 
-        if (Auth::check()) {
-            Auth::logout();
+        // Explicitly target the 'web' guard, not the ambiguous Auth::logout().
+        // Laravel's Authenticate middleware calls Auth::shouldUse('sanctum')
+        // once the auth:sanctum check on this route succeeds, making 'sanctum'
+        // (a RequestGuard, which has no logout() method) the default guard for
+        // the rest of the request - Auth::logout() would fatal here.
+        if (Auth::guard('web')->check()) {
+            Auth::guard('web')->logout();
         }
     }
 

@@ -6,16 +6,20 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import Link from '@mui/material/Link'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
 import { useColorMode } from '../providers/ColorModeProvider'
+import { useMe } from '../../features/auth/hooks/useAuth'
 
 export function StorefrontLayout({ children }: { children: ReactNode }) {
   const { mode, toggle } = useColorMode()
+  const { data: user } = useMe()
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -39,6 +43,24 @@ export function StorefrontLayout({ children }: { children: ReactNode }) {
                   {mode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
                 </IconButton>
               </Tooltip>
+              {user ? (
+                <Tooltip title="My account">
+                  <IconButton component={RouterLink} to="/account">
+                    <PersonOutlinedIcon />
+                  </IconButton>
+                </Tooltip>
+              ) : (
+                <>
+                  <Link component={RouterLink} to="/login" underline="none" color="inherit">
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Sign in
+                    </Typography>
+                  </Link>
+                  <Button component={RouterLink} to="/register" variant="contained" size="small">
+                    Sign up
+                  </Button>
+                </>
+              )}
             </Stack>
           </Toolbar>
         </Container>
