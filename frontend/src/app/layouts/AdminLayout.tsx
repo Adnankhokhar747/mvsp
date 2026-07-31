@@ -24,6 +24,7 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import CardMembershipOutlinedIcon from '@mui/icons-material/CardMembershipOutlined'
 import ReviewsOutlinedIcon from '@mui/icons-material/ReviewsOutlined'
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined'
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
@@ -43,6 +44,7 @@ const NAV_ITEMS = [
   { label: 'Plans', to: '/plans', icon: <CardMembershipOutlinedIcon />, enabled: true },
   { label: 'Reviews', to: '/reviews', icon: <ReviewsOutlinedIcon />, enabled: true },
   { label: 'Activity Log', to: '/activity-logs', icon: <HistoryOutlinedIcon />, enabled: true },
+  { label: 'Staff & Roles', to: '/staff', icon: <BadgeOutlinedIcon />, enabled: true },
   { label: 'Settings', to: '/settings', icon: <SettingsOutlinedIcon />, enabled: true },
 ]
 

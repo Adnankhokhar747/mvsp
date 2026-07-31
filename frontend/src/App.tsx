@@ -13,6 +13,7 @@ import { PayoutsListPage } from './features/payouts/pages/PayoutsListPage'
 import { PlansPage } from './features/plans/pages/PlansPage'
 import { ReviewsListPage } from './features/reviews/pages/ReviewsListPage'
 import { ActivityLogPage } from './features/activity-logs/pages/ActivityLogPage'
+import { StaffListPage } from './features/staff/pages/StaffListPage'
 
 function App() {
   return (
@@ -125,6 +126,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <ActivityLogPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/staff"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <StaffListPage />
               </AdminLayout>
             </ProtectedRoute>
           }

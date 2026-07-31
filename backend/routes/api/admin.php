@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Admin\PayoutController as AdminPayoutController;
 use App\Http\Controllers\Api\V1\Admin\PlanFeatureController;
 use App\Http\Controllers\Api\V1\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Api\V1\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\Api\V1\Admin\StaffController;
 use App\Http\Controllers\Api\V1\Admin\SubscriptionPlanController as AdminSubscriptionPlanController;
 use App\Http\Controllers\Api\V1\Admin\VendorController as AdminVendorController;
 use App\Http\Controllers\Api\V1\Admin\VendorKycDocumentController;
@@ -51,4 +52,11 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::post('reviews/{review}/moderate', [AdminReviewController::class, 'moderate']);
 
     Route::get('activity-logs', [ActivityLogController::class, 'index']);
+
+    Route::get('staff', [StaffController::class, 'index']);
+    Route::get('staff-roles', [StaffController::class, 'roles']);
+    Route::post('staff', [StaffController::class, 'store']);
+    Route::patch('staff/{user}/role', [StaffController::class, 'updateRole']);
+    Route::post('staff/{user}/suspend', [StaffController::class, 'suspend']);
+    Route::post('staff/{user}/reactivate', [StaffController::class, 'reactivate']);
 });
