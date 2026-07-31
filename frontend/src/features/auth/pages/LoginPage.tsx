@@ -62,7 +62,7 @@ export function LoginPage() {
       >
         <Paper elevation={0} sx={{ p: 5, width: 400, border: '1px solid', borderColor: 'divider' }}>
           <Stack spacing={0.5} sx={{ mb: 4 }}>
-            <Typography variant="h5" fontWeight={700}>
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>
               ServiceHub Admin
             </Typography>
             <Typography variant="body2" color="text.secondary">

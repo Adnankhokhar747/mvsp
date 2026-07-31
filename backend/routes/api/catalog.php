@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\V1\Catalog\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('categories', [CategoryController::class, 'index']);
-Route::get('categories/{category}', [CategoryController::class, 'show']);
+Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
 
 Route::get('services', [ServiceController::class, 'index']);
 Route::get('services/{service}', [ServiceController::class, 'show']);

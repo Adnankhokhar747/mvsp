@@ -86,7 +86,7 @@ export function PlansPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Subscription Plans
         </Typography>
         <Typography color="text.secondary">
@@ -128,7 +128,7 @@ export function PlansPage() {
                   : plans?.map((plan) => (
                       <TableRow key={plan.id} hover>
                         <TableCell>
-                          <Typography fontWeight={600}>{plan.name}</Typography>
+                          <Typography sx={{ fontWeight: 600 }}>{plan.name}</Typography>
                           <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'capitalize' }}>
                             {plan.billing_cycle}
                           </Typography>
@@ -212,7 +212,7 @@ export function PlansPage() {
                   : features?.map((feature) => (
                       <TableRow key={feature.id} hover>
                         <TableCell>
-                          <Typography variant="body2" fontFamily="monospace">
+                          <Typography variant="body2" sx={{ fontFamily: "monospace" }}>
                             {feature.key}
                           </Typography>
                         </TableCell>
@@ -249,7 +249,7 @@ export function PlansPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

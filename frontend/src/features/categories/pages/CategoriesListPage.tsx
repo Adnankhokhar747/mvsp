@@ -90,7 +90,7 @@ export function CategoriesListPage() {
     <Stack spacing={3}>
       <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <Stack>
-          <Typography variant="h4" fontWeight={700}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
             Categories
           </Typography>
           <Typography color="text.secondary">
@@ -141,7 +141,7 @@ export function CategoriesListPage() {
                   : rows.map(({ category, depth }) => (
                       <TableRow key={category.id} hover>
                         <TableCell>
-                          <Typography sx={{ pl: depth * 3 }} fontWeight={depth === 0 ? 600 : 400}>
+                          <Typography sx={{ pl: depth * 3, fontWeight: depth === 0 ? 600 : 400 }}>
                             {depth > 0 && '— '}
                             {category.name}
                           </Typography>
@@ -215,7 +215,7 @@ export function CategoriesListPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

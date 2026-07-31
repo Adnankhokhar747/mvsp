@@ -74,7 +74,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         }}
       >
         <Toolbar sx={{ px: 3 }}>
-          <Typography variant="h6" fontWeight={700}>
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>
             ServiceHub
           </Typography>
         </Toolbar>
@@ -120,7 +120,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
             </IconButton>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
               <Box sx={{ px: 2, py: 1 }}>
-                <Typography variant="body2" fontWeight={600}>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
                   {user?.name}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">

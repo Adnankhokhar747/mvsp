@@ -84,7 +84,7 @@ export function StaffListPage() {
     <Stack spacing={3}>
       <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <Stack>
-          <Typography variant="h4" fontWeight={700}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
             Staff &amp; Roles
           </Typography>
           <Typography color="text.secondary">Manage platform admin accounts and their roles.</Typography>
@@ -166,7 +166,7 @@ export function StaffListPage() {
                       return (
                         <TableRow key={member.id} hover>
                           <TableCell>
-                            <Typography fontWeight={600}>
+                            <Typography sx={{ fontWeight: 600 }}>
                               {member.name}
                               {isSelf && ' (you)'}
                             </Typography>
@@ -240,7 +240,7 @@ export function StaffListPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

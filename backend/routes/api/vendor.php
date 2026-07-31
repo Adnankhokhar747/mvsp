@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\V1\Vendor\StaffController;
 use App\Http\Controllers\Api\V1\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('vendors/{vendor}', [VendorController::class, 'show']);
+Route::get('vendors/{vendor:slug}', [VendorController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('vendors', [VendorController::class, 'store']);

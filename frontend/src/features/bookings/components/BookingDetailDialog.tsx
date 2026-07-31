@@ -57,7 +57,7 @@ export function BookingDetailDialog({ bookingId, onClose, onNotify, canCancel }:
         ) : (
           <Stack spacing={2.5} sx={{ mt: 1 }}>
             <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="subtitle1" fontWeight={600}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 {booking.booking_number}
               </Typography>
               <BookingStatusChip status={booking.status} />

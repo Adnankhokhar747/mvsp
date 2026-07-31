@@ -51,7 +51,7 @@ function StatCard({
           {icon}
         </Stack>
         <Stack>
-          <Typography variant="h4" fontWeight={700}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
             {value ?? '—'}
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -71,7 +71,7 @@ export function OverviewPage() {
   return (
     <Stack spacing={4}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Welcome back{user ? `, ${user.name.split(' ')[0]}` : ''}
         </Typography>
         <Typography color="text.secondary">Here's what's happening on the platform.</Typography>

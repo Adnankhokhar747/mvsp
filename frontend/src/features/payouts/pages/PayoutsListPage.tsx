@@ -44,7 +44,7 @@ export function PayoutsListPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Payouts
         </Typography>
         <Typography color="text.secondary">Review and process vendor payout requests.</Typography>
@@ -98,7 +98,7 @@ export function PayoutsListPage() {
                   : data?.data.map((payout) => (
                       <TableRow key={payout.id} hover sx={{ cursor: 'pointer' }} onClick={() => setSelectedId(payout.id)}>
                         <TableCell>
-                          <Typography fontWeight={600}>{payout.vendor?.business_name}</Typography>
+                          <Typography sx={{ fontWeight: 600 }}>{payout.vendor?.business_name}</Typography>
                         </TableCell>
                         <TableCell>
                           <Typography variant="body2">{money(payout.amount, payout.currency_code)}</Typography>
@@ -145,7 +145,7 @@ export function PayoutsListPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

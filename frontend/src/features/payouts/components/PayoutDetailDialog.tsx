@@ -69,7 +69,7 @@ export function PayoutDetailDialog({ payout, onClose, onNotify }: PayoutDetailDi
         <DialogContent>
           <Stack spacing={2.5} sx={{ mt: 1 }}>
             <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="subtitle1" fontWeight={600}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 {payout.vendor?.business_name}
               </Typography>
               <PayoutStatusChip status={payout.status} />

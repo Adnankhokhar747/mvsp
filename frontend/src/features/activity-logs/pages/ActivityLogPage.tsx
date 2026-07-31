@@ -51,7 +51,7 @@ export function ActivityLogPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Activity Log
         </Typography>
         <Typography color="text.secondary">

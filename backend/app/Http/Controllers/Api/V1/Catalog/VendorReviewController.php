@@ -17,7 +17,7 @@ class VendorReviewController extends Controller
         $canSeeAll = $user && ($user->hasAnyRole(['super-admin', 'support-agent'])
             || $vendor->vendorUsers()->where('user_id', $user->id)->exists());
 
-        $query = Review::where('vendor_id', $vendor->id);
+        $query = Review::where('vendor_id', $vendor->id)->with(['customer', 'service']);
         if (! $canSeeAll) {
             $query->where('status', 'published');
         }

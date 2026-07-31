@@ -48,7 +48,7 @@ export function SettingsPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Settings
         </Typography>
         <Typography color="text.secondary">
@@ -84,7 +84,7 @@ export function SettingsPage() {
                   : gateways?.map((gateway) => (
                       <TableRow key={gateway.id} hover>
                         <TableCell>
-                          <Typography fontWeight={600}>{gateway.name}</Typography>
+                          <Typography sx={{ fontWeight: 600 }}>{gateway.name}</Typography>
                           <Typography variant="caption" color="text.secondary">
                             {gateway.driver}
                           </Typography>
@@ -130,7 +130,7 @@ export function SettingsPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

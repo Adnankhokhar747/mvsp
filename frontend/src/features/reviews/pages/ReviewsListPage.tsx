@@ -50,7 +50,7 @@ export function ReviewsListPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Reviews
         </Typography>
         <Typography color="text.secondary">Moderate customer reviews left on vendor services.</Typography>
@@ -105,7 +105,7 @@ export function ReviewsListPage() {
                   : data?.data.map((review) => (
                       <TableRow key={review.id} hover>
                         <TableCell>
-                          <Typography fontWeight={600}>{review.service?.title}</Typography>
+                          <Typography sx={{ fontWeight: 600 }}>{review.service?.title}</Typography>
                           <Typography variant="caption" color="text.secondary">
                             {review.vendor?.business_name}
                           </Typography>
@@ -118,7 +118,7 @@ export function ReviewsListPage() {
                         </TableCell>
                         <TableCell sx={{ maxWidth: 320 }}>
                           {review.title && (
-                            <Typography variant="body2" fontWeight={600}>
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
                               {review.title}
                             </Typography>
                           )}
@@ -178,7 +178,7 @@ export function ReviewsListPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

@@ -52,7 +52,7 @@ export function BookingsListPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Bookings
         </Typography>
         <Typography color="text.secondary">All bookings across every vendor on the platform.</Typography>
@@ -129,7 +129,7 @@ export function BookingsListPage() {
                   : data?.data.map((booking) => (
                       <TableRow key={booking.id} hover sx={{ cursor: 'pointer' }} onClick={() => setSelectedId(booking.id)}>
                         <TableCell>
-                          <Typography fontWeight={600}>{booking.booking_number}</Typography>
+                          <Typography sx={{ fontWeight: 600 }}>{booking.booking_number}</Typography>
                           <Typography variant="caption" color="text.secondary">
                             {booking.service?.title}
                           </Typography>
@@ -183,7 +183,7 @@ export function BookingsListPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

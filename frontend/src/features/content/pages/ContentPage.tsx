@@ -41,7 +41,7 @@ export function ContentPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Content
         </Typography>
         <Typography color="text.secondary">Manage CMS pages, legal documents, and notification templates.</Typography>
@@ -67,7 +67,7 @@ export function ContentPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )
@@ -130,8 +130,8 @@ function PagesPanel({ notify }: { notify: (m: string, s: 'success' | 'error') =>
               {pages?.map((page) => (
                 <TableRow key={page.id} hover>
                   <TableCell>
-                    <Typography fontWeight={600}>{page.title}</Typography>
-                    <Typography variant="caption" color="text.secondary" fontFamily="monospace">
+                    <Typography sx={{ fontWeight: 600 }}>{page.title}</Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontFamily: "monospace" }}>
                       /{page.slug}
                     </Typography>
                   </TableCell>
@@ -205,7 +205,7 @@ function LegalPanel({ notify }: { notify: (m: string, s: 'success' | 'error') =>
               {documents?.map((doc) => (
                 <TableRow key={doc.id} hover>
                   <TableCell>
-                    <Typography fontFamily="monospace">{doc.type}</Typography>
+                    <Typography sx={{ fontFamily: "monospace" }}>{doc.type}</Typography>
                   </TableCell>
                   <TableCell>{doc.version}</TableCell>
                   <TableCell>
@@ -293,7 +293,7 @@ function TemplatesPanel({ notify }: { notify: (m: string, s: 'success' | 'error'
               {templates?.map((template) => (
                 <TableRow key={template.id} hover>
                   <TableCell>
-                    <Typography fontFamily="monospace">{template.key}</Typography>
+                    <Typography sx={{ fontFamily: "monospace" }}>{template.key}</Typography>
                     <Typography variant="caption" color="text.secondary">
                       {template.locale}
                     </Typography>

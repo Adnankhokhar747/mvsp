@@ -95,7 +95,7 @@ export function VendorsListPage() {
     <Stack spacing={3}>
       <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <Stack>
-          <Typography variant="h4" fontWeight={700}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
             Vendors
           </Typography>
           <Typography color="text.secondary">Review applications and manage vendor accounts.</Typography>
@@ -176,7 +176,7 @@ export function VendorsListPage() {
                   : data?.data.map((vendor) => (
                       <TableRow key={vendor.id} hover>
                         <TableCell>
-                          <Typography fontWeight={600}>{vendor.business_name}</Typography>
+                          <Typography sx={{ fontWeight: 600 }}>{vendor.business_name}</Typography>
                           <Typography variant="caption" color="text.secondary">
                             {vendor.slug}
                           </Typography>
@@ -279,7 +279,7 @@ export function VendorsListPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )

@@ -78,7 +78,7 @@ function DocumentRow({
     <Stack spacing={1} sx={{ py: 1.5 }}>
       <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
         <Stack>
-          <Typography variant="body2" fontWeight={600}>
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
             {document.document_type?.name ?? 'Document'}
           </Typography>
           <Link

@@ -47,7 +47,7 @@ export function PaymentsListPage() {
   return (
     <Stack spacing={3}>
       <Stack>
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" sx={{ fontWeight: 700 }}>
           Payments
         </Typography>
         <Typography color="text.secondary">All transactions processed across every vendor on the platform.</Typography>
@@ -129,7 +129,7 @@ export function PaymentsListPage() {
                         onClick={() => setSelectedId(transaction.id)}
                       >
                         <TableCell>
-                          <Typography fontWeight={600}>{transaction.transaction_number}</Typography>
+                          <Typography sx={{ fontWeight: 600 }}>{transaction.transaction_number}</Typography>
                           <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'capitalize' }}>
                             {transaction.gateway}
                           </Typography>
@@ -182,7 +182,7 @@ export function PaymentsListPage() {
         onClose={() => setToast(null)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        {toast && <Alert severity={toast.severity}>{toast.message}</Alert>}
+        {toast ? <Alert severity={toast.severity}>{toast.message}</Alert> : undefined}
       </Snackbar>
     </Stack>
   )
