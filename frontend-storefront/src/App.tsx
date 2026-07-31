@@ -10,6 +10,9 @@ import { LoginPage } from './features/auth/pages/LoginPage'
 import { RegisterPage } from './features/auth/pages/RegisterPage'
 import { VerifyEmailPage } from './features/auth/pages/VerifyEmailPage'
 import { AccountPage } from './features/account/pages/AccountPage'
+import { BookingCreatePage } from './features/bookings/pages/BookingCreatePage'
+import { MyBookingsPage } from './features/bookings/pages/MyBookingsPage'
+import { BookingDetailPage } from './features/bookings/pages/BookingDetailPage'
 
 function App() {
   return (
@@ -28,6 +31,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <AccountPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/services/:id/book"
+            element={
+              <ProtectedRoute>
+                <BookingCreatePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bookings"
+            element={
+              <ProtectedRoute>
+                <MyBookingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bookings/:id"
+            element={
+              <ProtectedRoute>
+                <BookingDetailPage />
               </ProtectedRoute>
             }
           />

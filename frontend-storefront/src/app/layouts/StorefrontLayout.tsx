@@ -44,11 +44,18 @@ export function StorefrontLayout({ children }: { children: ReactNode }) {
                 </IconButton>
               </Tooltip>
               {user ? (
-                <Tooltip title="My account">
-                  <IconButton component={RouterLink} to="/account">
-                    <PersonOutlinedIcon />
-                  </IconButton>
-                </Tooltip>
+                <>
+                  <Link component={RouterLink} to="/bookings" underline="none" color="inherit">
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      My bookings
+                    </Typography>
+                  </Link>
+                  <Tooltip title="My account">
+                    <IconButton component={RouterLink} to="/account">
+                      <PersonOutlinedIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
               ) : (
                 <>
                   <Link component={RouterLink} to="/login" underline="none" color="inherit">

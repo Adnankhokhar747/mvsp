@@ -9,6 +9,7 @@ import Divider from '@mui/material/Divider'
 import Link from '@mui/material/Link'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined'
 import { useService } from '../hooks/useServices'
 import { ErrorState } from '../../../shared/components/ErrorState'
@@ -110,6 +111,16 @@ export function ServiceDetailPage() {
                 Approx. {service.duration_minutes} minutes
               </Typography>
             )}
+
+            <Button
+              component={RouterLink}
+              to={`/services/${service.id}/book`}
+              variant="contained"
+              size="large"
+              fullWidth
+            >
+              {service.price_type === 'quote' ? 'Request a quote' : 'Book now'}
+            </Button>
 
             {!!service.packages.length && (
               <>
