@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Booking;
 
+use App\Http\Resources\Review\ReviewResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -48,6 +49,7 @@ class BookingResource extends JsonResource
                 'note' => $h->note,
                 'created_at' => $h->created_at,
             ])),
+            'review' => $this->whenLoaded('review', fn () => $this->review ? new ReviewResource($this->review) : null),
             'created_at' => $this->created_at,
         ];
     }

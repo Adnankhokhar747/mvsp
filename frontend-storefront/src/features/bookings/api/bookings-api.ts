@@ -1,5 +1,5 @@
 import { apiClient } from '../../../shared/lib/api-client'
-import type { AvailabilitySlot, Booking, BookingStatus, PaginatedResponse } from '../types'
+import type { AvailabilitySlot, Booking, BookingStatus, PaginatedResponse, Review } from '../types'
 
 export interface BookingListParams {
   page?: number
@@ -45,6 +45,17 @@ export async function acceptQuote(bookingId: number): Promise<Booking> {
 
 export async function rejectQuote(bookingId: number): Promise<Booking> {
   const { data } = await apiClient.post<{ data: Booking }>(`/bookings/${bookingId}/quote/reject`)
+  return data.data
+}
+
+export interface CreateReviewPayload {
+  rating: number
+  title?: string
+  comment?: string
+}
+
+export async function createReview(bookingId: number, payload: CreateReviewPayload): Promise<Review> {
+  const { data } = await apiClient.post<{ data: Review }>(`/bookings/${bookingId}/review`, payload)
   return data.data
 }
 

@@ -23,7 +23,7 @@ class BookingController extends Controller
     {
         $user = $request->user();
 
-        $query = Booking::query()->with(['service', 'quotes', 'customer', 'vendor']);
+        $query = Booking::query()->with(['service', 'quotes', 'customer', 'vendor', 'review']);
 
         // A user's roles aren't mutually exclusive — the same account can be a
         // customer AND a vendor's staff member — so this is a union of every
@@ -70,7 +70,7 @@ class BookingController extends Controller
     {
         $this->authorize('view', $booking);
 
-        return new BookingResource($booking->load(['service', 'quotes', 'statusHistory', 'customer', 'vendor']));
+        return new BookingResource($booking->load(['service', 'quotes', 'statusHistory', 'customer', 'vendor', 'review']));
     }
 
     public function reschedule(RescheduleBookingRequest $request, Booking $booking): JsonResponse

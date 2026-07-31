@@ -3,12 +3,14 @@ import {
   acceptQuote,
   cancelBooking,
   createBooking,
+  createReview,
   fetchAvailability,
   fetchBooking,
   fetchBookings,
   rejectQuote,
   type BookingListParams,
   type CreateBookingPayload,
+  type CreateReviewPayload,
 } from '../api/bookings-api'
 
 const BOOKINGS_KEY = ['bookings'] as const
@@ -57,6 +59,15 @@ export function useRejectQuote() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (bookingId: number) => rejectQuote(bookingId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: BOOKINGS_KEY }),
+  })
+}
+
+export function useCreateReview() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ bookingId, payload }: { bookingId: number; payload: CreateReviewPayload }) =>
+      createReview(bookingId, payload),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: BOOKINGS_KEY }),
   })
 }

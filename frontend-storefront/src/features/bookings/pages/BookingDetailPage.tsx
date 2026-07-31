@@ -9,7 +9,8 @@ import TextField from '@mui/material/TextField'
 import Skeleton from '@mui/material/Skeleton'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { useAcceptQuote, useBooking, useCancelBooking, useRejectQuote } from '../hooks/useBookings'
+import Rating from '@mui/material/Rating'
+import { useAcceptQuote, useBooking, useCancelBooking, useCreateReview, useRejectQuote } from '../hooks/useBookings'
 import { BookingStatusChip } from '../components/BookingStatusChip'
 import { ErrorState } from '../../../shared/components/ErrorState'
 import { extractErrorMessage } from '../../../shared/lib/api-client'
@@ -26,10 +27,14 @@ export function BookingDetailPage() {
   const cancelMutation = useCancelBooking()
   const acceptMutation = useAcceptQuote()
   const rejectMutation = useRejectQuote()
+  const reviewMutation = useCreateReview()
 
   const [cancelling, setCancelling] = useState(false)
   const [reason, setReason] = useState('')
   const [toast, setToast] = useState<{ message: string; severity: 'success' | 'error' } | null>(null)
+  const [reviewRating, setReviewRating] = useState<number | null>(null)
+  const [reviewTitle, setReviewTitle] = useState('')
+  const [reviewComment, setReviewComment] = useState('')
 
   if (isError) {
     return <ErrorState message="Couldn't load this booking." onRetry={() => refetch()} />
@@ -73,6 +78,19 @@ export function BookingDetailPage() {
     try {
       await rejectMutation.mutateAsync(bookingId)
       setToast({ message: 'Quote rejected.', severity: 'success' })
+    } catch (error) {
+      setToast({ message: extractErrorMessage(error), severity: 'error' })
+    }
+  }
+
+  const handleSubmitReview = async () => {
+    if (!bookingId || !reviewRating) return
+    try {
+      await reviewMutation.mutateAsync({
+        bookingId,
+        payload: { rating: reviewRating, title: reviewTitle || undefined, comment: reviewComment || undefined },
+      })
+      setToast({ message: 'Thanks for your review!', severity: 'success' })
     } catch (error) {
       setToast({ message: extractErrorMessage(error), severity: 'error' })
     }
@@ -184,6 +202,68 @@ export function BookingDetailPage() {
                     </Typography>
                   </Stack>
                 ))}
+              </Stack>
+            </>
+          )}
+
+          {booking.status === 'completed' && booking.review && (
+            <>
+              <Divider />
+              <Stack spacing={1}>
+                <Typography variant="subtitle2">Your review</Typography>
+                <Rating value={booking.review.rating} readOnly />
+                {booking.review.title && (
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {booking.review.title}
+                  </Typography>
+                )}
+                {booking.review.comment && <Typography variant="body2">{booking.review.comment}</Typography>}
+                {booking.review.vendor_reply && (
+                  <Stack sx={{ pl: 2, borderLeft: '2px solid', borderColor: 'divider', mt: 1 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Reply from vendor
+                    </Typography>
+                    <Typography variant="body2">{booking.review.vendor_reply}</Typography>
+                  </Stack>
+                )}
+              </Stack>
+            </>
+          )}
+
+          {booking.status === 'completed' && !booking.review && (
+            <>
+              <Divider />
+              <Stack spacing={1.5}>
+                <Typography variant="subtitle2">Leave a review</Typography>
+                <Rating
+                  value={reviewRating}
+                  onChange={(_, value) => setReviewRating(value)}
+                  size="large"
+                />
+                <TextField
+                  label="Title (optional)"
+                  size="small"
+                  fullWidth
+                  value={reviewTitle}
+                  onChange={(e) => setReviewTitle(e.target.value)}
+                />
+                <TextField
+                  label="Comment (optional)"
+                  size="small"
+                  fullWidth
+                  multiline
+                  minRows={2}
+                  value={reviewComment}
+                  onChange={(e) => setReviewComment(e.target.value)}
+                />
+                <Button
+                  variant="contained"
+                  onClick={handleSubmitReview}
+                  disabled={!reviewRating || reviewMutation.isPending}
+                  sx={{ alignSelf: 'flex-start' }}
+                >
+                  Submit review
+                </Button>
               </Stack>
             </>
           )}

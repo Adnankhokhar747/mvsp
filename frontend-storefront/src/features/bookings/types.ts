@@ -28,6 +28,18 @@ export interface BookingStatusHistoryEntry {
   created_at: string
 }
 
+export interface Review {
+  id: number
+  booking_id: number
+  rating: number
+  title: string | null
+  comment: string | null
+  vendor_reply: string | null
+  vendor_replied_at: string | null
+  status: string
+  created_at: string
+}
+
 export interface Booking {
   id: number
   booking_number: string
@@ -51,6 +63,7 @@ export interface Booking {
   service?: { id: number; title: string }
   vendor?: { id: number; business_name: string }
   status_history?: BookingStatusHistoryEntry[]
+  review?: Review | null
   refund_percentage?: number
   created_at: string
 }
