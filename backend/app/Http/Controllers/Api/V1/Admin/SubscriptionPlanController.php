@@ -10,6 +10,7 @@ use App\Http\Requests\Subscription\UpdateSubscriptionPlanRequest;
 use App\Http\Resources\Subscription\SubscriptionPlanResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class SubscriptionPlanController extends Controller
@@ -34,8 +35,20 @@ class SubscriptionPlanController extends Controller
         unset($data['values']);
         $data['slug'] = Str::slug($data['name']);
 
-        $plan = SubscriptionPlan::create($data);
-        $this->subscriptions->syncFeatureValues($plan, $values);
+        $plan = DB::transaction(function () use ($data, $values) {
+            // Only one plan may be the default at a time — VendorService::register()
+            // resolves the default via an unordered where('is_default', true)->first()
+            // lookup, so leaving more than one row true makes new-vendor plan
+            // assignment non-deterministic.
+            if (! empty($data['is_default'])) {
+                SubscriptionPlan::query()->update(['is_default' => false]);
+            }
+
+            $plan = SubscriptionPlan::create($data);
+            $this->subscriptions->syncFeatureValues($plan, $values);
+
+            return $plan;
+        });
 
         return (new SubscriptionPlanResource($plan->fresh()->load('featureValues.feature')))
             ->response()
@@ -50,10 +63,20 @@ class SubscriptionPlanController extends Controller
         $values = $data['values'] ?? null;
         unset($data['values']);
 
-        $subscriptionPlan->update($data);
-        if ($values !== null) {
-            $this->subscriptions->syncFeatureValues($subscriptionPlan, $values);
-        }
+        DB::transaction(function () use ($data, $values, $subscriptionPlan) {
+            if (($data['is_active'] ?? $subscriptionPlan->is_active) === false) {
+                $data['is_default'] = false;
+            }
+
+            if (! empty($data['is_default'])) {
+                SubscriptionPlan::where('id', '!=', $subscriptionPlan->id)->update(['is_default' => false]);
+            }
+
+            $subscriptionPlan->update($data);
+            if ($values !== null) {
+                $this->subscriptions->syncFeatureValues($subscriptionPlan, $values);
+            }
+        });
 
         return new SubscriptionPlanResource($subscriptionPlan->fresh()->load('featureValues.feature'));
     }

@@ -10,6 +10,7 @@ import { BookingsListPage } from './features/bookings/pages/BookingsListPage'
 import { PaymentsListPage } from './features/payments/pages/PaymentsListPage'
 import { SettingsPage } from './features/settings/pages/SettingsPage'
 import { PayoutsListPage } from './features/payouts/pages/PayoutsListPage'
+import { PlansPage } from './features/plans/pages/PlansPage'
 
 function App() {
   return (
@@ -89,6 +90,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <PayoutsListPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/plans"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <PlansPage />
               </AdminLayout>
             </ProtectedRoute>
           }
