@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Tooltip from '@mui/material/Tooltip'
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined'
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined'
+import MiscellaneousServicesOutlinedIcon from '@mui/icons-material/MiscellaneousServicesOutlined'
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined'
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined'
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined'
@@ -38,6 +39,7 @@ const DRAWER_WIDTH = 260
 const NAV_ITEMS = [
   { label: 'Overview', to: '/', icon: <DashboardOutlinedIcon />, enabled: true },
   { label: 'Vendors', to: '/vendors', icon: <StorefrontOutlinedIcon />, enabled: true },
+  { label: 'Services', to: '/services', icon: <MiscellaneousServicesOutlinedIcon />, enabled: true },
   { label: 'Categories', to: '/categories', icon: <CategoryOutlinedIcon />, enabled: true },
   { label: 'Bookings', to: '/bookings', icon: <EventNoteOutlinedIcon />, enabled: true },
   { label: 'Payments', to: '/payments', icon: <PaymentsOutlinedIcon />, enabled: true },

@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::patch('categories/{category}', [AdminCategoryController::class, 'update']);
     Route::delete('categories/{category}', [AdminCategoryController::class, 'destroy']);
 
+    Route::get('services', [AdminServiceController::class, 'index']);
     Route::post('services/{service}/moderate', [AdminServiceController::class, 'moderate']);
 
     Route::get('payouts', [AdminPayoutController::class, 'index']);

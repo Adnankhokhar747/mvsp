@@ -5,6 +5,7 @@ import { AdminLayout } from './app/layouts/AdminLayout'
 import { LoginPage } from './features/auth/pages/LoginPage'
 import { OverviewPage } from './features/overview/pages/OverviewPage'
 import { VendorsListPage } from './features/vendors/pages/VendorsListPage'
+import { ServicesListPage } from './features/services/pages/ServicesListPage'
 import { CategoriesListPage } from './features/categories/pages/CategoriesListPage'
 import { BookingsListPage } from './features/bookings/pages/BookingsListPage'
 import { PaymentsListPage } from './features/payments/pages/PaymentsListPage'
@@ -39,6 +40,17 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <VendorsListPage />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/services"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <ServicesListPage />
               </AdminLayout>
             </ProtectedRoute>
           }
