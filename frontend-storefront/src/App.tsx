@@ -16,6 +16,7 @@ import { BookingDetailPage } from './features/bookings/pages/BookingDetailPage'
 import { ConversationsListPage } from './features/messaging/pages/ConversationsListPage'
 import { ConversationThreadPage } from './features/messaging/pages/ConversationThreadPage'
 import { NewConversationPage } from './features/messaging/pages/NewConversationPage'
+import { AddressesPage } from './features/addresses/pages/AddressesPage'
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AccountPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account/addresses"
+            element={
+              <ProtectedRoute>
+                <AddressesPage />
               </ProtectedRoute>
             }
           />

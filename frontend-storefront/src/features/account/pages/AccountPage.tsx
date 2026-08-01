@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
@@ -82,6 +82,10 @@ export function AccountPage() {
           </Stack>
         </Stack>
       </Paper>
+
+      <Button component={RouterLink} to="/account/addresses" variant="outlined" sx={{ alignSelf: 'flex-start' }}>
+        Manage addresses
+      </Button>
 
       <Snackbar
         open={!!toast}

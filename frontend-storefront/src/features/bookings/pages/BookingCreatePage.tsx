@@ -1,15 +1,18 @@
-import { useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
 import Alert from '@mui/material/Alert'
 import Chip from '@mui/material/Chip'
 import Skeleton from '@mui/material/Skeleton'
 import { useService } from '../../services/hooks/useServices'
 import { useAvailability, useCreateBooking } from '../hooks/useBookings'
+import { useAddresses } from '../../addresses/hooks/useAddresses'
 import { extractErrorMessage } from '../../../shared/lib/api-client'
 
 function today(offsetDays = 0) {
@@ -25,10 +28,18 @@ export function BookingCreatePage() {
   const { data: service, isLoading: serviceLoading } = useService(serviceId)
   const createMutation = useCreateBooking()
 
+  const { data: addresses } = useAddresses()
   const [date, setDate] = useState(today(1))
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null)
+  const [addressId, setAddressId] = useState<number | ''>('')
   const [notes, setNotes] = useState('')
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (addresses?.length && addressId === '') {
+      setAddressId(addresses.find((a) => a.is_default)?.id ?? addresses[0].id)
+    }
+  }, [addresses, addressId])
 
   const isQuoteMode = service?.price_type === 'quote'
 
@@ -59,6 +70,7 @@ export function BookingCreatePage() {
       const booking = await createMutation.mutateAsync({
         service_id: serviceId,
         scheduled_at: selectedSlot ?? undefined,
+        address_id: addressId === '' ? undefined : addressId,
         notes: notes || undefined,
       })
       navigate(`/bookings/${booking.id}`)
@@ -131,6 +143,27 @@ export function BookingCreatePage() {
               </Stack>
             </>
           )}
+
+          <Stack spacing={0.5}>
+            <TextField
+              select
+              label="Service address (optional)"
+              value={addressId}
+              onChange={(e) => setAddressId(e.target.value === '' ? '' : Number(e.target.value))}
+              fullWidth
+            >
+              <MenuItem value="">No address</MenuItem>
+              {addresses?.map((address) => (
+                <MenuItem key={address.id} value={address.id}>
+                  {address.label ? `${address.label} — ` : ''}
+                  {address.line1}, {address.city}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Link component={RouterLink} to="/account/addresses" variant="caption">
+              Manage addresses
+            </Link>
+          </Stack>
 
           <TextField
             label={isQuoteMode ? 'Describe what you need' : 'Notes for the vendor (optional)'}

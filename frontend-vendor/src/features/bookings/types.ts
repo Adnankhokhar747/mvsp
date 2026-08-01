@@ -28,6 +28,17 @@ export interface BookingStatusHistoryEntry {
   created_at: string
 }
 
+export interface Address {
+  id: number
+  label: string | null
+  line1: string
+  line2: string | null
+  city: string
+  state: string | null
+  country_code: string
+  postal_code: string | null
+}
+
 export interface Review {
   id: number
   booking_id: number
@@ -52,6 +63,7 @@ export interface Booking {
   scheduled_at: string | null
   duration_minutes: number | null
   address_id: number | null
+  address?: Address | null
   status: BookingStatus
   price: number | null
   currency_code: string

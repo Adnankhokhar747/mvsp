@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Booking;
 
+use App\Http\Resources\Location\AddressResource;
 use App\Http\Resources\Review\ReviewResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,6 +23,7 @@ class BookingResource extends JsonResource
             'scheduled_at' => $this->scheduled_at,
             'duration_minutes' => $this->duration_minutes,
             'address_id' => $this->address_id,
+            'address' => $this->whenLoaded('address', fn () => $this->address ? new AddressResource($this->address) : null),
             'status' => $this->status,
             'price' => $this->price,
             'currency_code' => $this->currency_code,

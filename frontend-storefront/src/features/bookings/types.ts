@@ -1,3 +1,5 @@
+import type { Address } from '../addresses/types'
+
 export type BookingStatus =
   | 'pending'
   | 'quoted'
@@ -52,6 +54,7 @@ export interface Booking {
   scheduled_at: string | null
   duration_minutes: number | null
   address_id: number | null
+  address?: Address | null
   status: BookingStatus
   price: number | null
   currency_code: string

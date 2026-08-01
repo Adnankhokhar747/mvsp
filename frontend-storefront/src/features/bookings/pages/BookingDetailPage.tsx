@@ -133,6 +133,21 @@ export function BookingDetailPage() {
             </Stack>
           </Stack>
 
+          {booking.address && (
+            <Stack>
+              <Typography variant="caption" color="text.secondary">
+                Service address
+              </Typography>
+              <Typography variant="body2">
+                {booking.address.line1}
+                {booking.address.line2 ? `, ${booking.address.line2}` : ''}
+              </Typography>
+              <Typography variant="body2">
+                {[booking.address.city, booking.address.state, booking.address.postal_code].filter(Boolean).join(', ')}
+              </Typography>
+            </Stack>
+          )}
+
           {booking.notes && (
             <Stack>
               <Typography variant="caption" color="text.secondary">

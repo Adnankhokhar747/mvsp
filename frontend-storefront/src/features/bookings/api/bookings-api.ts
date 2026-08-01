@@ -25,6 +25,7 @@ export interface CreateBookingPayload {
   service_id: number
   service_package_id?: number
   scheduled_at?: string
+  address_id?: number
   notes?: string
 }
 
