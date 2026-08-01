@@ -50,6 +50,11 @@ export function StorefrontLayout({ children }: { children: ReactNode }) {
                       My bookings
                     </Typography>
                   </Link>
+                  <Link component={RouterLink} to="/messages" underline="none" color="inherit">
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Messages
+                    </Typography>
+                  </Link>
                   <Tooltip title="My account">
                     <IconButton component={RouterLink} to="/account">
                       <PersonOutlinedIcon />

@@ -29,10 +29,18 @@ class ConversationController extends Controller
         $conversations = Conversation::where(function ($q) use ($user, $ownerOrManagerVendorIds) {
             $q->where('customer_id', $user->id)->orWhereIn('vendor_id', $ownerOrManagerVendorIds);
         })
+            ->with(['vendor', 'customer'])
             ->latest('last_message_at')
             ->paginate($request->integer('per_page', 20));
 
         return ConversationResource::collection($conversations);
+    }
+
+    public function show(Conversation $conversation): ConversationResource
+    {
+        $this->authorize('view', $conversation);
+
+        return new ConversationResource($conversation->load(['vendor', 'customer']));
     }
 
     public function store(StartConversationRequest $request): JsonResponse
@@ -47,6 +55,6 @@ class ConversationController extends Controller
             return response()->json(['message' => $e->getMessage()], 422);
         }
 
-        return (new ConversationResource($conversation->fresh()))->response()->setStatusCode(201);
+        return (new ConversationResource($conversation->fresh()->load(['vendor', 'customer'])))->response()->setStatusCode(201);
     }
 }

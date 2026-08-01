@@ -13,6 +13,9 @@ import { AccountPage } from './features/account/pages/AccountPage'
 import { BookingCreatePage } from './features/bookings/pages/BookingCreatePage'
 import { MyBookingsPage } from './features/bookings/pages/MyBookingsPage'
 import { BookingDetailPage } from './features/bookings/pages/BookingDetailPage'
+import { ConversationsListPage } from './features/messaging/pages/ConversationsListPage'
+import { ConversationThreadPage } from './features/messaging/pages/ConversationThreadPage'
+import { NewConversationPage } from './features/messaging/pages/NewConversationPage'
 
 function App() {
   return (
@@ -55,6 +58,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <BookingDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vendors/:slug/message"
+            element={
+              <ProtectedRoute>
+                <NewConversationPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/messages"
+            element={
+              <ProtectedRoute>
+                <ConversationsListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/messages/:id"
+            element={
+              <ProtectedRoute>
+                <ConversationThreadPage />
               </ProtectedRoute>
             }
           />

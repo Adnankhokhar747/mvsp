@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Link as RouterLink, useParams } from 'react-router-dom'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
@@ -7,7 +7,9 @@ import Divider from '@mui/material/Divider'
 import Skeleton from '@mui/material/Skeleton'
 import Rating from '@mui/material/Rating'
 import Paper from '@mui/material/Paper'
+import Button from '@mui/material/Button'
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined'
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
 import { useVendor, useVendorReviews } from '../hooks/useVendors'
 import { useServices } from '../../services/hooks/useServices'
 import { ServiceCard } from '../../services/components/ServiceCard'
@@ -37,23 +39,33 @@ export function VendorProfilePage() {
 
   return (
     <Stack spacing={4}>
-      <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-        <Avatar src={vendor.logo_path ?? undefined} sx={{ width: 72, height: 72 }}>
-          <StorefrontOutlinedIcon />
-        </Avatar>
-        <Stack>
-          <Typography variant="h4" sx={{ fontWeight: 700 }}>
-            {vendor.business_name}
-          </Typography>
-          {!!reviews?.length && (
-            <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
-              <Rating value={avgRating} readOnly precision={0.5} size="small" />
-              <Typography variant="caption" color="text.secondary">
-                ({reviews.length} review{reviews.length === 1 ? '' : 's'})
-              </Typography>
-            </Stack>
-          )}
+      <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+        <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
+          <Avatar src={vendor.logo_path ?? undefined} sx={{ width: 72, height: 72 }}>
+            <StorefrontOutlinedIcon />
+          </Avatar>
+          <Stack>
+            <Typography variant="h4" sx={{ fontWeight: 700 }}>
+              {vendor.business_name}
+            </Typography>
+            {!!reviews?.length && (
+              <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
+                <Rating value={avgRating} readOnly precision={0.5} size="small" />
+                <Typography variant="caption" color="text.secondary">
+                  ({reviews.length} review{reviews.length === 1 ? '' : 's'})
+                </Typography>
+              </Stack>
+            )}
+          </Stack>
         </Stack>
+        <Button
+          component={RouterLink}
+          to={`/vendors/${vendor.slug}/message`}
+          variant="outlined"
+          startIcon={<ChatBubbleOutlineOutlinedIcon />}
+        >
+          Message
+        </Button>
       </Stack>
 
       {vendor.description && <Typography variant="body1">{vendor.description}</Typography>}

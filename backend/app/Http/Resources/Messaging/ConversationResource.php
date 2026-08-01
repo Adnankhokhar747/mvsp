@@ -15,6 +15,15 @@ class ConversationResource extends JsonResource
             'vendor_id' => $this->vendor_id,
             'customer_id' => $this->customer_id,
             'last_message_at' => $this->last_message_at,
+            'vendor' => $this->whenLoaded('vendor', fn () => [
+                'id' => $this->vendor->id,
+                'business_name' => $this->vendor->business_name,
+                'slug' => $this->vendor->slug,
+            ]),
+            'customer' => $this->whenLoaded('customer', fn () => [
+                'id' => $this->customer->id,
+                'name' => $this->customer->name,
+            ]),
             'unread_count' => $this->when(
                 $request->user() !== null,
                 fn () => $this->messages()->where('sender_id', '!=', $request->user()->id)->whereNull('read_at')->count()

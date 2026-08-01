@@ -10,6 +10,8 @@ import { ServiceCreatePage } from './features/services/pages/ServiceCreatePage'
 import { ServiceDetailPage } from './features/services/pages/ServiceDetailPage'
 import { ProfilePage } from './features/vendor/pages/ProfilePage'
 import { WalletPage } from './features/wallet/pages/WalletPage'
+import { ConversationsListPage } from './features/messaging/pages/ConversationsListPage'
+import { ConversationThreadPage } from './features/messaging/pages/ConversationThreadPage'
 
 function App() {
   return (
@@ -71,6 +73,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <WalletPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/messages"
+            element={
+              <ProtectedRoute>
+                <ConversationsListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/messages/:id"
+            element={
+              <ProtectedRoute>
+                <ConversationThreadPage />
               </ProtectedRoute>
             }
           />
