@@ -14,8 +14,49 @@ import Divider from '@mui/material/Divider'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import { useColorMode } from '../providers/ColorModeProvider'
 import { useMe } from '../../features/auth/hooks/useAuth'
+
+function LogoMark() {
+  return (
+    <Box
+      sx={{
+        width: 28,
+        height: 28,
+        borderRadius: '8px',
+        bgcolor: 'primary.main',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+      }}
+    >
+      <CheckRoundedIcon sx={{ color: 'primary.contrastText', fontSize: 18 }} />
+    </Box>
+  )
+}
+
+function NavLinkText({ to, children }: { to: string; children: ReactNode }) {
+  return (
+    <Link
+      component={RouterLink}
+      to={to}
+      underline="none"
+      color="inherit"
+      sx={{
+        px: 1.25,
+        py: 0.75,
+        borderRadius: 1.5,
+        '&:hover': { bgcolor: 'action.hover' },
+      }}
+    >
+      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+        {children}
+      </Typography>
+    </Link>
+  )
+}
 
 export function StorefrontLayout({ children }: { children: ReactNode }) {
   const { mode, toggle } = useColorMode()
@@ -27,17 +68,16 @@ export function StorefrontLayout({ children }: { children: ReactNode }) {
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
             <Link component={RouterLink} to="/" underline="none" color="inherit">
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                ServiceHub
-              </Typography>
+              <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
+                <LogoMark />
+                <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: '-0.01em' }}>
+                  ServiceHub
+                </Typography>
+              </Stack>
             </Link>
 
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-              <Link component={RouterLink} to="/services" underline="none" color="inherit">
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  Browse services
-                </Typography>
-              </Link>
+            <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
+              <NavLinkText to="/services">Browse services</NavLinkText>
               <Tooltip title={mode === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}>
                 <IconButton onClick={toggle}>
                   {mode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
@@ -45,16 +85,8 @@ export function StorefrontLayout({ children }: { children: ReactNode }) {
               </Tooltip>
               {user ? (
                 <>
-                  <Link component={RouterLink} to="/bookings" underline="none" color="inherit">
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      My bookings
-                    </Typography>
-                  </Link>
-                  <Link component={RouterLink} to="/messages" underline="none" color="inherit">
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Messages
-                    </Typography>
-                  </Link>
+                  <NavLinkText to="/bookings">My bookings</NavLinkText>
+                  <NavLinkText to="/messages">Messages</NavLinkText>
                   <Tooltip title="My account">
                     <IconButton component={RouterLink} to="/account">
                       <PersonOutlinedIcon />
@@ -63,12 +95,8 @@ export function StorefrontLayout({ children }: { children: ReactNode }) {
                 </>
               ) : (
                 <>
-                  <Link component={RouterLink} to="/login" underline="none" color="inherit">
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Sign in
-                    </Typography>
-                  </Link>
-                  <Button component={RouterLink} to="/register" variant="contained" size="small">
+                  <NavLinkText to="/login">Sign in</NavLinkText>
+                  <Button component={RouterLink} to="/register" variant="contained" size="small" sx={{ ml: 0.5 }}>
                     Sign up
                   </Button>
                 </>

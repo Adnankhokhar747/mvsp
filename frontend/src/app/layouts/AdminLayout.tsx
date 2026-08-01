@@ -5,6 +5,7 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Drawer from '@mui/material/Drawer'
 import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -31,26 +32,69 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import { useColorMode } from '../providers/ColorModeProvider'
 import { useMe, useLogout } from '../../features/auth/hooks/useAuth'
 
-const DRAWER_WIDTH = 260
+const DRAWER_WIDTH = 264
 
-const NAV_ITEMS = [
-  { label: 'Overview', to: '/', icon: <DashboardOutlinedIcon />, enabled: true },
-  { label: 'Vendors', to: '/vendors', icon: <StorefrontOutlinedIcon />, enabled: true },
-  { label: 'Services', to: '/services', icon: <MiscellaneousServicesOutlinedIcon />, enabled: true },
-  { label: 'Categories', to: '/categories', icon: <CategoryOutlinedIcon />, enabled: true },
-  { label: 'Bookings', to: '/bookings', icon: <EventNoteOutlinedIcon />, enabled: true },
-  { label: 'Payments', to: '/payments', icon: <PaymentsOutlinedIcon />, enabled: true },
-  { label: 'Payouts', to: '/payouts', icon: <AccountBalanceWalletOutlinedIcon />, enabled: true },
-  { label: 'Plans', to: '/plans', icon: <CardMembershipOutlinedIcon />, enabled: true },
-  { label: 'Reviews', to: '/reviews', icon: <ReviewsOutlinedIcon />, enabled: true },
-  { label: 'Activity Log', to: '/activity-logs', icon: <HistoryOutlinedIcon />, enabled: true },
-  { label: 'Staff & Roles', to: '/staff', icon: <BadgeOutlinedIcon />, enabled: true },
-  { label: 'Content', to: '/content', icon: <ArticleOutlinedIcon />, enabled: true },
-  { label: 'Settings', to: '/settings', icon: <SettingsOutlinedIcon />, enabled: true },
+const NAV_SECTIONS = [
+  {
+    label: null,
+    items: [{ label: 'Overview', to: '/', icon: <DashboardOutlinedIcon fontSize="small" /> }],
+  },
+  {
+    label: 'Marketplace',
+    items: [
+      { label: 'Vendors', to: '/vendors', icon: <StorefrontOutlinedIcon fontSize="small" /> },
+      { label: 'Services', to: '/services', icon: <MiscellaneousServicesOutlinedIcon fontSize="small" /> },
+      { label: 'Categories', to: '/categories', icon: <CategoryOutlinedIcon fontSize="small" /> },
+      { label: 'Bookings', to: '/bookings', icon: <EventNoteOutlinedIcon fontSize="small" /> },
+    ],
+  },
+  {
+    label: 'Finance',
+    items: [
+      { label: 'Payments', to: '/payments', icon: <PaymentsOutlinedIcon fontSize="small" /> },
+      { label: 'Payouts', to: '/payouts', icon: <AccountBalanceWalletOutlinedIcon fontSize="small" /> },
+      { label: 'Plans', to: '/plans', icon: <CardMembershipOutlinedIcon fontSize="small" /> },
+    ],
+  },
+  {
+    label: 'Engagement',
+    items: [
+      { label: 'Reviews', to: '/reviews', icon: <ReviewsOutlinedIcon fontSize="small" /> },
+      { label: 'Activity Log', to: '/activity-logs', icon: <HistoryOutlinedIcon fontSize="small" /> },
+    ],
+  },
+  {
+    label: 'Administration',
+    items: [
+      { label: 'Staff & Roles', to: '/staff', icon: <BadgeOutlinedIcon fontSize="small" /> },
+      { label: 'Content', to: '/content', icon: <ArticleOutlinedIcon fontSize="small" /> },
+      { label: 'Settings', to: '/settings', icon: <SettingsOutlinedIcon fontSize="small" /> },
+    ],
+  },
 ]
+
+function LogoMark() {
+  return (
+    <Box
+      sx={{
+        width: 30,
+        height: 30,
+        borderRadius: '9px',
+        bgcolor: 'primary.main',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0,
+      }}
+    >
+      <CheckRoundedIcon sx={{ color: 'primary.contrastText', fontSize: 20 }} />
+    </Box>
+  )
+}
 
 export function AdminLayout({ children }: { children: ReactNode }) {
   const { mode, toggle } = useColorMode()
@@ -72,35 +116,90 @@ export function AdminLayout({ children }: { children: ReactNode }) {
         sx={{
           width: DRAWER_WIDTH,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: DRAWER_WIDTH, boxSizing: 'border-box', border: 'none' },
+          [`& .MuiDrawer-paper`]: {
+            width: DRAWER_WIDTH,
+            boxSizing: 'border-box',
+            border: 'none',
+            borderRight: '1px solid',
+            borderColor: 'divider',
+          },
         }}
       >
-        <Toolbar sx={{ px: 3 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            ServiceHub
-          </Typography>
+        <Toolbar sx={{ px: 2.5 }}>
+          <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
+            <LogoMark />
+            <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: '-0.01em' }}>
+              ServiceHub
+            </Typography>
+          </Stack>
         </Toolbar>
-        <List sx={{ px: 1.5 }}>
-          {NAV_ITEMS.map((item) => (
-            <ListItemButton
-              key={item.label}
-              component={item.enabled ? NavLink : 'div'}
-              to={item.enabled ? item.to : undefined}
-              disabled={!item.enabled}
-              sx={{
-                borderRadius: 2,
-                mb: 0.5,
-                '&.active': {
-                  bgcolor: 'action.selected',
-                  fontWeight: 600,
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.label} secondary={item.enabled ? undefined : 'Coming soon'} />
-            </ListItemButton>
+
+        <Box
+          sx={{
+            flexGrow: 1,
+            overflowY: 'auto',
+            px: 1.5,
+            pb: 2,
+            '&::-webkit-scrollbar': { width: 6 },
+            '&::-webkit-scrollbar-thumb': { backgroundColor: 'divider', borderRadius: 3 },
+            '&::-webkit-scrollbar-track': { backgroundColor: 'transparent' },
+          }}
+        >
+          {NAV_SECTIONS.map((section, i) => (
+            <Box key={section.label ?? i} sx={{ mb: 1 }}>
+              {section.label && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    display: 'block',
+                    px: 1.5,
+                    pt: 2,
+                    pb: 0.75,
+                    fontWeight: 700,
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    color: 'text.secondary',
+                    fontSize: '0.6875rem',
+                  }}
+                >
+                  {section.label}
+                </Typography>
+              )}
+              <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
+                {section.items.map((item) => (
+                  <ListItemButton
+                    key={item.label}
+                    component={NavLink}
+                    to={item.to}
+                    end={item.to === '/'}
+                    sx={{
+                      borderRadius: 1.5,
+                      py: 0.875,
+                      pl: 1.5,
+                      borderLeft: '3px solid transparent',
+                      color: 'text.secondary',
+                      '& .MuiListItemIcon-root': { color: 'text.secondary' },
+                      '&.active': {
+                        bgcolor: 'action.selected',
+                        borderLeftColor: 'primary.main',
+                        color: 'primary.main',
+                        fontWeight: 600,
+                        '& .MuiListItemIcon-root': { color: 'primary.main' },
+                      },
+                      '&:hover': { bgcolor: 'action.hover' },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 34 }}>{item.icon}</ListItemIcon>
+                    <ListItemText
+                      primary={item.label}
+                      slotProps={{ primary: { sx: { fontSize: '0.875rem', fontWeight: 'inherit' } } }}
+                    />
+                  </ListItemButton>
+                ))}
+              </List>
+            </Box>
           ))}
-        </List>
+        </Box>
       </Drawer>
 
       <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -118,7 +217,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
             </Tooltip>
 
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)} size="small">
-              <Avatar sx={{ width: 32, height: 32 }}>{user?.name.charAt(0)}</Avatar>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main', fontSize: '0.9rem', fontWeight: 600 }}>
+                {user?.name.charAt(0)}
+              </Avatar>
             </IconButton>
             <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
               <Box sx={{ px: 2, py: 1 }}>

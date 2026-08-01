@@ -32,10 +32,16 @@ const components: ThemeOptions['components'] = {
     styleOverrides: {
       root: { backgroundImage: 'none' },
     },
+    variants: [
+      {
+        props: { variant: 'outlined' },
+        style: { boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06)' },
+      },
+    ],
   },
   MuiCard: {
     styleOverrides: {
-      root: { borderRadius: 12 },
+      root: { borderRadius: 12, boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06)' },
     },
   },
 }
