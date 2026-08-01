@@ -1,8 +1,9 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { AppProviders } from './app/providers/AppProviders'
 import { VendorLayout } from './app/layouts/VendorLayout'
 import { ProtectedRoute } from './app/router/ProtectedRoute'
 import { LoginPage } from './features/auth/pages/LoginPage'
+import { OverviewPage } from './features/overview/pages/OverviewPage'
 import { BookingsListPage } from './features/bookings/pages/BookingsListPage'
 import { BookingDetailPage } from './features/bookings/pages/BookingDetailPage'
 import { ServicesListPage } from './features/services/pages/ServicesListPage'
@@ -18,7 +19,14 @@ function App() {
     <AppProviders>
       <VendorLayout>
         <Routes>
-          <Route path="/" element={<Navigate to="/bookings" replace />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <OverviewPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route
             path="/bookings"

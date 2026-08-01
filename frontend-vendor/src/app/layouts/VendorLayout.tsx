@@ -79,7 +79,7 @@ export function VendorLayout({ children }: { children: ReactNode }) {
       <AppBar position="sticky" color="inherit" elevation={0} sx={{ borderBottom: '1px solid', borderColor: 'divider' }}>
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            <Link component={RouterLink} to="/bookings" underline="none" color="inherit">
+            <Link component={RouterLink} to="/" underline="none" color="inherit">
               <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
                 <LogoMark />
                 <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: '-0.01em' }}>
@@ -91,6 +91,7 @@ export function VendorLayout({ children }: { children: ReactNode }) {
             <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
               {user && (
                 <>
+                  <NavLinkText to="/">Overview</NavLinkText>
                   <NavLinkText to="/bookings">Bookings</NavLinkText>
                   <NavLinkText to="/services">Services</NavLinkText>
                   <NavLinkText to="/profile">Profile</NavLinkText>

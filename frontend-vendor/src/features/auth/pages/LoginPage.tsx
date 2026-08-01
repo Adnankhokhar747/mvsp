@@ -36,7 +36,7 @@ export function LoginPage() {
     setServerError(null)
     try {
       await loginMutation.mutateAsync({ ...values, device_name: 'vendor-web' })
-      const redirectTo = (location.state as { from?: string } | null)?.from ?? '/bookings'
+      const redirectTo = (location.state as { from?: string } | null)?.from ?? '/'
       navigate(redirectTo, { replace: true })
     } catch (error) {
       setServerError(extractErrorMessage(error))
