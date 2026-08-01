@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Drawer from '@mui/material/Drawer'
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
+import Collapse from '@mui/material/Collapse'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -33,10 +34,21 @@ import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import { useColorMode } from '../providers/ColorModeProvider'
 import { useMe, useLogout } from '../../features/auth/hooks/useAuth'
 
 const DRAWER_WIDTH = 236
+const COLLAPSE_STORAGE_KEY = 'servicehub-admin-nav-collapsed'
+
+function loadCollapsedState(): Record<string, boolean> {
+  try {
+    const raw = localStorage.getItem(COLLAPSE_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
+  }
+}
 
 const NAV_SECTIONS = [
   {
@@ -102,6 +114,15 @@ export function AdminLayout({ children }: { children: ReactNode }) {
   const logoutMutation = useLogout()
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>(loadCollapsedState)
+
+  const toggleSection = (label: string) => {
+    setCollapsedSections((prev) => {
+      const next = { ...prev, [label]: !prev[label] }
+      localStorage.setItem(COLLAPSE_STORAGE_KEY, JSON.stringify(next))
+      return next
+    })
+  }
 
   const handleLogout = async () => {
     setAnchorEl(null)
@@ -145,61 +166,83 @@ export function AdminLayout({ children }: { children: ReactNode }) {
             '&::-webkit-scrollbar-track': { backgroundColor: 'transparent' },
           }}
         >
-          {NAV_SECTIONS.map((section, i) => (
-            <Box key={section.label ?? i} sx={{ mb: 1 }}>
-              {section.label && (
-                <Typography
-                  variant="caption"
-                  sx={{
-                    display: 'block',
-                    px: 1.25,
-                    pt: 1.5,
-                    pb: 0.5,
-                    fontWeight: 700,
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    color: 'text.secondary',
-                    fontSize: '0.6875rem',
-                  }}
-                >
-                  {section.label}
-                </Typography>
-              )}
-              <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.25 }}>
-                {section.items.map((item) => (
+          {NAV_SECTIONS.map((section, i) => {
+            const isOpen = !section.label || !collapsedSections[section.label]
+            return (
+              <Box key={section.label ?? i} sx={{ mb: 0.5 }}>
+                {section.label && (
                   <ListItemButton
-                    key={item.label}
-                    component={NavLink}
-                    to={item.to}
-                    end={item.to === '/'}
+                    onClick={() => toggleSection(section.label as string)}
                     sx={{
                       borderRadius: 1.5,
-                      py: 0.625,
-                      pl: 1.25,
-                      minHeight: 32,
-                      borderLeft: '3px solid transparent',
-                      color: 'text.secondary',
-                      '& .MuiListItemIcon-root': { color: 'text.secondary' },
-                      '&.active': {
-                        bgcolor: 'action.selected',
-                        borderLeftColor: 'primary.main',
-                        color: 'primary.main',
-                        fontWeight: 600,
-                        '& .MuiListItemIcon-root': { color: 'primary.main' },
-                      },
+                      py: 0.25,
+                      px: 1.25,
+                      mt: 1,
+                      minHeight: 26,
                       '&:hover': { bgcolor: 'action.hover' },
                     }}
                   >
-                    <ListItemIcon sx={{ minWidth: 28, '& svg': { fontSize: 18 } }}>{item.icon}</ListItemIcon>
-                    <ListItemText
-                      primary={item.label}
-                      slotProps={{ primary: { sx: { fontSize: '0.8125rem', fontWeight: 'inherit' } } }}
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        flexGrow: 1,
+                        fontWeight: 700,
+                        letterSpacing: '0.06em',
+                        textTransform: 'uppercase',
+                        color: 'text.secondary',
+                        fontSize: '0.6875rem',
+                      }}
+                    >
+                      {section.label}
+                    </Typography>
+                    <ExpandMoreRoundedIcon
+                      sx={{
+                        fontSize: 16,
+                        color: 'text.secondary',
+                        transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+                        transition: 'transform 150ms ease',
+                      }}
                     />
                   </ListItemButton>
-                ))}
-              </List>
-            </Box>
-          ))}
+                )}
+                <Collapse in={isOpen} timeout={150}>
+                  <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.25, pt: 0.25 }}>
+                    {section.items.map((item) => (
+                      <ListItemButton
+                        key={item.label}
+                        component={NavLink}
+                        to={item.to}
+                        end={item.to === '/'}
+                        sx={{
+                          borderRadius: 1.5,
+                          py: 0.625,
+                          pl: 1.25,
+                          minHeight: 32,
+                          borderLeft: '3px solid transparent',
+                          color: 'text.secondary',
+                          '& .MuiListItemIcon-root': { color: 'text.secondary' },
+                          '&.active': {
+                            bgcolor: 'action.selected',
+                            borderLeftColor: 'primary.main',
+                            color: 'primary.main',
+                            fontWeight: 600,
+                            '& .MuiListItemIcon-root': { color: 'primary.main' },
+                          },
+                          '&:hover': { bgcolor: 'action.hover' },
+                        }}
+                      >
+                        <ListItemIcon sx={{ minWidth: 28, '& svg': { fontSize: 18 } }}>{item.icon}</ListItemIcon>
+                        <ListItemText
+                          primary={item.label}
+                          slotProps={{ primary: { sx: { fontSize: '0.8125rem', fontWeight: 'inherit' } } }}
+                        />
+                      </ListItemButton>
+                    ))}
+                  </List>
+                </Collapse>
+              </Box>
+            )
+          })}
         </Box>
       </Drawer>
 
