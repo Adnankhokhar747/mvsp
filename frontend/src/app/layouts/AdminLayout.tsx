@@ -36,7 +36,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import { useColorMode } from '../providers/ColorModeProvider'
 import { useMe, useLogout } from '../../features/auth/hooks/useAuth'
 
-const DRAWER_WIDTH = 264
+const DRAWER_WIDTH = 236
 
 const NAV_SECTIONS = [
   {
@@ -81,9 +81,9 @@ function LogoMark() {
   return (
     <Box
       sx={{
-        width: 30,
-        height: 30,
-        borderRadius: '9px',
+        width: 26,
+        height: 26,
+        borderRadius: '8px',
         bgcolor: 'primary.main',
         display: 'flex',
         alignItems: 'center',
@@ -91,7 +91,7 @@ function LogoMark() {
         flexShrink: 0,
       }}
     >
-      <CheckRoundedIcon sx={{ color: 'primary.contrastText', fontSize: 20 }} />
+      <CheckRoundedIcon sx={{ color: 'primary.contrastText', fontSize: 16 }} />
     </Box>
   )
 }
@@ -125,10 +125,10 @@ export function AdminLayout({ children }: { children: ReactNode }) {
           },
         }}
       >
-        <Toolbar sx={{ px: 2.5 }}>
-          <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center' }}>
+        <Toolbar sx={{ px: 2.25 }}>
+          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <LogoMark />
-            <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: '-0.01em' }}>
+            <Typography sx={{ fontWeight: 700, letterSpacing: '-0.01em', fontSize: '1.0625rem' }}>
               ServiceHub
             </Typography>
           </Stack>
@@ -152,9 +152,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
                   variant="caption"
                   sx={{
                     display: 'block',
-                    px: 1.5,
-                    pt: 2,
-                    pb: 0.75,
+                    px: 1.25,
+                    pt: 1.5,
+                    pb: 0.5,
                     fontWeight: 700,
                     letterSpacing: '0.06em',
                     textTransform: 'uppercase',
@@ -174,8 +174,9 @@ export function AdminLayout({ children }: { children: ReactNode }) {
                     end={item.to === '/'}
                     sx={{
                       borderRadius: 1.5,
-                      py: 0.875,
-                      pl: 1.5,
+                      py: 0.625,
+                      pl: 1.25,
+                      minHeight: 32,
                       borderLeft: '3px solid transparent',
                       color: 'text.secondary',
                       '& .MuiListItemIcon-root': { color: 'text.secondary' },
@@ -189,10 +190,10 @@ export function AdminLayout({ children }: { children: ReactNode }) {
                       '&:hover': { bgcolor: 'action.hover' },
                     }}
                   >
-                    <ListItemIcon sx={{ minWidth: 34 }}>{item.icon}</ListItemIcon>
+                    <ListItemIcon sx={{ minWidth: 28, '& svg': { fontSize: 18 } }}>{item.icon}</ListItemIcon>
                     <ListItemText
                       primary={item.label}
-                      slotProps={{ primary: { sx: { fontSize: '0.875rem', fontWeight: 'inherit' } } }}
+                      slotProps={{ primary: { sx: { fontSize: '0.8125rem', fontWeight: 'inherit' } } }}
                     />
                   </ListItemButton>
                 ))}
