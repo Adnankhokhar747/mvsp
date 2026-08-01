@@ -1,10 +1,10 @@
 import { createTheme, type ThemeOptions } from '@mui/material/styles'
 
-const shape = { borderRadius: 12 }
+const shape = { borderRadius: 10 }
 
 const typography: ThemeOptions['typography'] = {
   fontFamily: [
-    'Inter',
+    '"Plus Jakarta Sans"',
     '-apple-system',
     'BlinkMacSystemFont',
     '"Segoe UI"',
@@ -25,7 +25,7 @@ const typography: ThemeOptions['typography'] = {
 const components: ThemeOptions['components'] = {
   MuiButton: {
     styleOverrides: {
-      root: { borderRadius: 10, paddingInline: 20 },
+      root: { borderRadius: 8, paddingInline: 20, boxShadow: 'none' },
     },
   },
   MuiPaper: {
@@ -35,7 +35,7 @@ const components: ThemeOptions['components'] = {
   },
   MuiCard: {
     styleOverrides: {
-      root: { borderRadius: 16 },
+      root: { borderRadius: 12 },
     },
   },
 }
@@ -43,9 +43,12 @@ const components: ThemeOptions['components'] = {
 export const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    primary: { main: '#4F46E5' },
-    secondary: { main: '#0EA5E9' },
-    background: { default: '#F7F7FB', paper: '#FFFFFF' },
+    primary: { main: '#0369A1' },
+    secondary: { main: '#334155' },
+    background: { default: '#F8FAFC', paper: '#FFFFFF' },
+    text: { primary: '#0F172A', secondary: '#64748B' },
+    divider: '#E2E8F0',
+    error: { main: '#DC2626' },
   },
   shape,
   typography,
@@ -55,9 +58,12 @@ export const lightTheme = createTheme({
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#818CF8' },
-    secondary: { main: '#38BDF8' },
-    background: { default: '#0B0E14', paper: '#12151C' },
+    primary: { main: '#38BDF8' },
+    secondary: { main: '#94A3B8' },
+    background: { default: '#0B1120', paper: '#131B2E' },
+    text: { primary: '#F1F5F9', secondary: '#94A3B8' },
+    divider: '#1E293B',
+    error: { main: '#F87171' },
   },
   shape,
   typography,
