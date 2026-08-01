@@ -1,5 +1,5 @@
 import { apiClient } from '../../../shared/lib/api-client'
-import type { PaginatedResponse, Service, ServiceAvailabilitySlot, ServiceMedia, ServiceStatus } from '../types'
+import type { PaginatedResponse, Service, ServiceAvailabilitySlot, ServiceMedia, ServicePackage, ServiceStatus } from '../types'
 
 export interface ServiceListParams {
   page?: number
@@ -50,6 +50,35 @@ export async function uploadServiceMedia(id: number, file: File): Promise<Servic
     headers: { 'Content-Type': 'multipart/form-data' },
   })
   return data.data
+}
+
+export interface ServicePackagePayload {
+  name: string
+  price: number
+  duration_minutes?: number
+  description?: string
+  sort_order?: number
+}
+
+export async function createPackage(serviceId: number, payload: ServicePackagePayload): Promise<ServicePackage> {
+  const { data } = await apiClient.post<{ data: ServicePackage }>(`/vendor/services/${serviceId}/packages`, payload)
+  return data.data
+}
+
+export async function updatePackage(
+  serviceId: number,
+  packageId: number,
+  payload: Partial<ServicePackagePayload>,
+): Promise<ServicePackage> {
+  const { data } = await apiClient.patch<{ data: ServicePackage }>(
+    `/vendor/services/${serviceId}/packages/${packageId}`,
+    payload,
+  )
+  return data.data
+}
+
+export async function deletePackage(serviceId: number, packageId: number): Promise<void> {
+  await apiClient.delete(`/vendor/services/${serviceId}/packages/${packageId}`)
 }
 
 export async function setAvailability(

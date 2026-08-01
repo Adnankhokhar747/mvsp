@@ -1,12 +1,16 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
+  createPackage,
   createService,
+  deletePackage,
   fetchVendorService,
   fetchVendorServices,
   setAvailability,
+  updatePackage,
   updateService,
   uploadServiceMedia,
   type ServiceListParams,
+  type ServicePackagePayload,
   type ServicePayload,
 } from '../api/services-api'
 import type { ServiceAvailabilitySlot } from '../types'
@@ -49,6 +53,40 @@ export function useUploadServiceMedia() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ id, file }: { id: number; file: File }) => uploadServiceMedia(id, file),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: SERVICES_KEY }),
+  })
+}
+
+export function useCreatePackage() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ serviceId, payload }: { serviceId: number; payload: ServicePackagePayload }) =>
+      createPackage(serviceId, payload),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: SERVICES_KEY }),
+  })
+}
+
+export function useUpdatePackage() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      serviceId,
+      packageId,
+      payload,
+    }: {
+      serviceId: number
+      packageId: number
+      payload: Partial<ServicePackagePayload>
+    }) => updatePackage(serviceId, packageId, payload),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: SERVICES_KEY }),
+  })
+}
+
+export function useDeletePackage() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ serviceId, packageId }: { serviceId: number; packageId: number }) =>
+      deletePackage(serviceId, packageId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: SERVICES_KEY }),
   })
 }

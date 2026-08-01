@@ -7,14 +7,22 @@ import Divider from '@mui/material/Divider'
 import Skeleton from '@mui/material/Skeleton'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
-import { useUpdateService, useUploadServiceMedia, useSetAvailability, useVendorService } from '../hooks/useServices'
+import {
+  useCreatePackage,
+  useDeletePackage,
+  useUpdateService,
+  useUploadServiceMedia,
+  useSetAvailability,
+  useVendorService,
+} from '../hooks/useServices'
 import { ServiceForm } from '../components/ServiceForm'
 import { MediaGallery } from '../components/MediaGallery'
 import { AvailabilityEditor } from '../components/AvailabilityEditor'
+import { PackagesEditor } from '../components/PackagesEditor'
 import { ServiceStatusChip } from '../components/ServiceStatusChip'
 import { ErrorState } from '../../../shared/components/ErrorState'
 import { extractErrorMessage } from '../../../shared/lib/api-client'
-import type { ServicePayload } from '../api/services-api'
+import type { ServicePackagePayload, ServicePayload } from '../api/services-api'
 import type { ServiceAvailabilitySlot } from '../types'
 
 export function ServiceDetailPage() {
@@ -24,6 +32,8 @@ export function ServiceDetailPage() {
   const updateMutation = useUpdateService()
   const uploadMediaMutation = useUploadServiceMedia()
   const availabilityMutation = useSetAvailability()
+  const createPackageMutation = useCreatePackage()
+  const deletePackageMutation = useDeletePackage()
 
   const [toast, setToast] = useState<{ message: string; severity: 'success' | 'error' } | null>(null)
 
@@ -67,6 +77,24 @@ export function ServiceDetailPage() {
     }
   }
 
+  const handleCreatePackage = async (payload: ServicePackagePayload) => {
+    try {
+      await createPackageMutation.mutateAsync({ serviceId: service.id, payload })
+      setToast({ message: 'Package added.', severity: 'success' })
+    } catch (error) {
+      throw new Error(extractErrorMessage(error))
+    }
+  }
+
+  const handleDeletePackage = async (packageId: number) => {
+    try {
+      await deletePackageMutation.mutateAsync({ serviceId: service.id, packageId })
+      setToast({ message: 'Package removed.', severity: 'success' })
+    } catch (error) {
+      throw new Error(extractErrorMessage(error))
+    }
+  }
+
   return (
     <Stack spacing={3} sx={{ maxWidth: 640 }}>
       <Stack direction="row" sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
@@ -86,6 +114,20 @@ export function ServiceDetailPage() {
             Photos
           </Typography>
           <MediaGallery media={service.media} onUpload={handleUpload} />
+        </Stack>
+      </Paper>
+
+      <Paper variant="outlined" sx={{ p: 3 }}>
+        <Stack spacing={2}>
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            Packages
+          </Typography>
+          <PackagesEditor
+            packages={service.packages}
+            currencyCode={service.currency_code}
+            onCreate={handleCreatePackage}
+            onDelete={handleDeletePackage}
+          />
         </Stack>
       </Paper>
 
