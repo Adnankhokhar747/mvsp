@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
@@ -31,10 +31,18 @@ export function RequestPayoutDialog({
   isSubmitting,
 }: RequestPayoutDialogProps) {
   const [amount, setAmount] = useState('')
-  const [bankAccountId, setBankAccountId] = useState<number | ''>(
-    bankAccounts.find((a) => a.is_default)?.id ?? bankAccounts[0]?.id ?? '',
-  )
+  const [bankAccountId, setBankAccountId] = useState<number | ''>('')
   const [error, setError] = useState<string | null>(null)
+
+  // The dialog is always mounted (only its `open` prop toggles visibility), so a
+  // useState initializer would capture whatever bankAccounts looked like at first
+  // render — often before the list has loaded — and never update after. Re-derive
+  // the default selection each time the dialog is actually opened instead.
+  useEffect(() => {
+    if (open) {
+      setBankAccountId(bankAccounts.find((a) => a.is_default)?.id ?? bankAccounts[0]?.id ?? '')
+    }
+  }, [open, bankAccounts])
 
   const availableDisplay = new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode }).format(
     availableBalance / 100,
