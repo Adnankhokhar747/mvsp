@@ -6,6 +6,7 @@ import '../../features/auth/domain/auth_controller.dart';
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/otp_verify_screen.dart';
 import '../../features/auth/presentation/register_screen.dart';
+import '../../features/bookings/presentation/booking_detail_screen.dart';
 import '../../features/shell/presentation/home_shell.dart';
 
 class _AuthRefreshNotifier extends ChangeNotifier {
@@ -40,6 +41,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => OtpVerifyScreen(email: state.extra as String? ?? ''),
       ),
       GoRoute(path: '/', builder: (context, state) => const HomeShell()),
+      GoRoute(
+        path: '/bookings/:id',
+        builder: (context, state) => BookingDetailScreen(bookingId: int.parse(state.pathParameters['id']!)),
+      ),
     ],
   );
 });

@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/domain/auth_controller.dart';
-import '../../bookings/presentation/bookings_placeholder_screen.dart';
+import '../../bookings/presentation/bookings_list_screen.dart';
 import '../../messaging/presentation/messages_placeholder_screen.dart';
 import '../../profile/presentation/profile_screen.dart';
 import '../../services/presentation/services_placeholder_screen.dart';
 import '../../wallet/presentation/wallet_placeholder_screen.dart';
 import 'home_placeholder_screen.dart';
 
+/// Whether the current user should see vendor-mode UI: they must actually be
+/// a vendor AND have the in-app toggle switched on. Shared by the shell (to
+/// pick the tab set) and by feature screens (to gate vendor-only actions).
+final effectiveVendorModeProvider = Provider<bool>((ref) {
+  final user = ref.watch(authControllerProvider).value;
+  return user != null && user.isVendor && ref.watch(vendorModeProvider);
+});
+
 const _vendorTabs = [
-  _TabSpec('Bookings', Icons.event_note_outlined, BookingsPlaceholderScreen()),
+  _TabSpec('Bookings', Icons.event_note_outlined, BookingsListScreen()),
   _TabSpec('Services', Icons.miscellaneous_services_outlined, ServicesPlaceholderScreen()),
   _TabSpec('Wallet', Icons.account_balance_wallet_outlined, WalletPlaceholderScreen()),
   _TabSpec('Messages', Icons.chat_bubble_outline_rounded, MessagesPlaceholderScreen()),
@@ -19,7 +27,7 @@ const _vendorTabs = [
 
 const _customerTabs = [
   _TabSpec('Home', Icons.home_outlined, HomePlaceholderScreen()),
-  _TabSpec('Bookings', Icons.event_note_outlined, BookingsPlaceholderScreen()),
+  _TabSpec('Bookings', Icons.event_note_outlined, BookingsListScreen()),
   _TabSpec('Messages', Icons.chat_bubble_outline_rounded, MessagesPlaceholderScreen()),
   _TabSpec('Profile', Icons.person_outline_rounded, ProfileScreen()),
 ];
@@ -59,8 +67,7 @@ class HomeShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authControllerProvider).value;
-    final isVendorMode = user != null && user.isVendor && ref.watch(vendorModeProvider);
+    final isVendorMode = ref.watch(effectiveVendorModeProvider);
     final tabIndex = ref.watch(homeTabIndexProvider);
 
     final tabs = isVendorMode ? _vendorTabs : _customerTabs;
