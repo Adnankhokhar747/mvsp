@@ -3,10 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/domain/auth_controller.dart';
 import '../../bookings/presentation/bookings_list_screen.dart';
-import '../../messaging/presentation/messages_placeholder_screen.dart';
+import '../../messaging/presentation/conversations_list_screen.dart';
 import '../../profile/presentation/profile_screen.dart';
-import '../../services/presentation/services_placeholder_screen.dart';
-import '../../wallet/presentation/wallet_placeholder_screen.dart';
+import '../../services/presentation/services_list_screen.dart';
+import '../../wallet/presentation/wallet_screen.dart';
 import 'home_placeholder_screen.dart';
 
 /// Whether the current user should see vendor-mode UI: they must actually be
@@ -19,16 +19,16 @@ final effectiveVendorModeProvider = Provider<bool>((ref) {
 
 const _vendorTabs = [
   _TabSpec('Bookings', Icons.event_note_outlined, BookingsListScreen()),
-  _TabSpec('Services', Icons.miscellaneous_services_outlined, ServicesPlaceholderScreen()),
-  _TabSpec('Wallet', Icons.account_balance_wallet_outlined, WalletPlaceholderScreen()),
-  _TabSpec('Messages', Icons.chat_bubble_outline_rounded, MessagesPlaceholderScreen()),
+  _TabSpec('Services', Icons.miscellaneous_services_outlined, ServicesListScreen()),
+  _TabSpec('Wallet', Icons.account_balance_wallet_outlined, WalletScreen()),
+  _TabSpec('Messages', Icons.chat_bubble_outline_rounded, ConversationsListScreen()),
   _TabSpec('Profile', Icons.person_outline_rounded, ProfileScreen()),
 ];
 
 const _customerTabs = [
   _TabSpec('Home', Icons.home_outlined, HomePlaceholderScreen()),
   _TabSpec('Bookings', Icons.event_note_outlined, BookingsListScreen()),
-  _TabSpec('Messages', Icons.chat_bubble_outline_rounded, MessagesPlaceholderScreen()),
+  _TabSpec('Messages', Icons.chat_bubble_outline_rounded, ConversationsListScreen()),
   _TabSpec('Profile', Icons.person_outline_rounded, ProfileScreen()),
 ];
 
